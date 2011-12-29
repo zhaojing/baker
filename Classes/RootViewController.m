@@ -36,6 +36,7 @@
 #import "Downloader.h"
 #import "SSZipArchive.h"
 #import "PageTitleLabel.h"
+#import "TiledImageView.h"
 #import "Utils.h"
 
 // ALERT LABELS
@@ -184,10 +185,10 @@
 - (void)setPageSize:(NSString *)orientation {
 	NSLog(@"• Set size for orientation: %@", orientation);
     
-    pageWidth = screenBounds.size.width;
+    pageWidth  = screenBounds.size.width;
     pageHeight = screenBounds.size.height;
 	if ([orientation isEqualToString:@"landscape"]) {
-		pageWidth = screenBounds.size.height;
+		pageWidth  = screenBounds.size.height;
 		pageHeight = screenBounds.size.width;
 	}
 }
@@ -319,7 +320,7 @@
         
         if (pageDetails.count > i && [pageDetails objectAtIndex:i] != nil) {
             
-            NSDictionary *details = [NSDictionary dictionaryWithDictionary:[pageDetails objectAtIndex:i]];              
+            NSDictionary *details  = [NSDictionary dictionaryWithDictionary:[pageDetails objectAtIndex:i]];              
             UIView *screenshotView = [details objectForKey:[NSString stringWithFormat:@"screenshot-%@", [self getCurrentInterfaceOrientation]]];
             if (screenshotView != nil)
             {
@@ -1178,15 +1179,8 @@
 - (void)placeScreenshotForView:(UIWebView *)webView andPage:(int)pageNumber andOrientation:(NSString *)interfaceOrientation {
             
     int i = pageNumber - 1;
-    NSString    *screenshotFile = [cachedScreenshotsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"screenshot-%@-%i.jpg", interfaceOrientation, pageNumber]];
-    UIImageView *screenshotView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:screenshotFile]];
- 
-    CGSize pageSize = CGSizeMake(screenBounds.size.width, screenBounds.size.height);
-    if ([interfaceOrientation isEqualToString:@"landscape"]) {
-        pageSize = CGSizeMake(screenBounds.size.height, screenBounds.size.width);
-    }
-    
-    screenshotView.frame = CGRectMake(pageSize.width * i, 0, pageSize.width, pageSize.height);
+    NSString *screenshotFile = [cachedScreenshotsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"screenshot-%@-%i.jpg", interfaceOrientation, pageNumber]];
+    TiledImageView *screenshotView = [[TiledImageView alloc] initWithFrame:CGRectMake(pageWidth * i, 0, pageWidth, pageHeight) andImage:[UIImage imageWithContentsOfFile:screenshotFile]];
     screenshotView.hidden = YES;
     
     BOOL alreadyPlaced = NO;
@@ -1194,7 +1188,7 @@
     {
         NSMutableDictionary *details = [pageDetails objectAtIndex:i];
         NSString *key = [NSString stringWithFormat:@"screenshot-%@", interfaceOrientation];
-        UIImageView *oldScreenshotView = [details objectForKey:key]; 
+        TiledImageView *oldScreenshotView = [details objectForKey:key];
         
         if (oldScreenshotView != nil) {            
             [scrollView addSubview:screenshotView];

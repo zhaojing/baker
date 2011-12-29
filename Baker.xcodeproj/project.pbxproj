@@ -16,6 +16,7 @@
 		9F242EDA11FB344D00641757 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F242ED911FB344D00641757 /* QuartzCore.framework */; };
 		9F4F07F411F8DE8200375A8C /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4F07F211F8DE8200375A8C /* RootViewController.m */; };
 		9F6E6B6012AAA1BE0019EFB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F6E6B5F12AAA1BE0019EFB6 /* libz.dylib */; };
+		9FF5254114AC72B400915112 /* TiledImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF5254014AC72B400915112 /* TiledImageView.m */; };
 		BF2F99401269379900E356EF /* book in Resources */ = {isa = PBXBuildFile; fileRef = BF2F993F1269379900E356EF /* book */; };
 		BFBACF331274CD38009D9595 /* ios-icon-ipad72.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBACF321274CD38009D9595 /* ios-icon-ipad72.png */; };
 		BFEC41E61309D9CA00628DF3 /* ios-icon-iphone57.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEC41E51309D9CA00628DF3 /* ios-icon-iphone57.png */; };
@@ -76,6 +77,8 @@
 		9F4F07F111F8DE8200375A8C /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		9F4F07F211F8DE8200375A8C /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = RootViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		9F6E6B5F12AAA1BE0019EFB6 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
+		9FF5253F14AC72B400915112 /* TiledImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TiledImageView.h; path = ui/TiledImageView.h; sourceTree = "<group>"; };
+		9FF5254014AC72B400915112 /* TiledImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TiledImageView.m; path = ui/TiledImageView.m; sourceTree = "<group>"; };
 		BF2F993F1269379900E356EF /* book */ = {isa = PBXFileReference; lastKnownFileType = folder; path = book; sourceTree = "<group>"; };
 		BFBACF321274CD38009D9595 /* ios-icon-ipad72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-icon-ipad72.png"; sourceTree = "<group>"; };
 		BFEC41E51309D9CA00628DF3 /* ios-icon-iphone57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-icon-iphone57.png"; sourceTree = "<group>"; };
@@ -242,6 +245,8 @@
 		D2690B5D13EB46200011CC7D /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				9FF5253F14AC72B400915112 /* TiledImageView.h */,
+				9FF5254014AC72B400915112 /* TiledImageView.m */,
 				D2690B5F13EB46A30011CC7D /* PageTitleLabel.h */,
 				D2690B6013EB46A30011CC7D /* PageTitleLabel.m */,
 			);
@@ -421,6 +426,7 @@
 				D2263F38144B2F2900DCBECF /* zip.c in Sources */,
 				D2263F39144B2F2900DCBECF /* SSZipArchive.m in Sources */,
 				F4968A871498C29F00D6689C /* JSONKit.m in Sources */,
+				9FF5254114AC72B400915112 /* TiledImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +494,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -525,6 +532,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -539,6 +547,7 @@
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";

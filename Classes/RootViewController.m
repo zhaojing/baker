@@ -1179,8 +1179,15 @@
 - (void)placeScreenshotForView:(UIWebView *)webView andPage:(int)pageNumber andOrientation:(NSString *)interfaceOrientation {
             
     int i = pageNumber - 1;
+    CGSize pageSize = CGSizeMake(screenBounds.size.width, screenBounds.size.height);
+    if ([interfaceOrientation isEqualToString:@"landscape"]) {
+        pageSize = CGSizeMake(screenBounds.size.height, screenBounds.size.width);
+    }
+    
     NSString *screenshotFile = [cachedScreenshotsPath stringByAppendingPathComponent:[NSString stringWithFormat:@"screenshot-%@-%i.jpg", interfaceOrientation, pageNumber]];
-    TiledImageView *screenshotView = [[TiledImageView alloc] initWithFrame:CGRectMake(pageWidth * i, 0, pageWidth, pageHeight) andImage:[UIImage imageWithContentsOfFile:screenshotFile]];
+    UIImage  *screenshot     = [[UIImage alloc] initWithContentsOfFile:screenshotFile];
+    
+    TiledImageView *screenshotView = [[TiledImageView alloc] initWithFrame:CGRectMake(pageSize.width * i, 0, pageSize.width, pageSize.height) andImage:screenshot];
     screenshotView.hidden = YES;
     
     BOOL alreadyPlaced = NO;
@@ -1224,6 +1231,7 @@
     }
     
     [screenshotView release];
+    [screenshot release];
 }
 
 #pragma mark - GESTURES

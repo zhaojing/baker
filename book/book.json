@@ -9,7 +9,7 @@
     "orientation": "both",
     "zoomable": false,
 
-    "-baker-background": "#000000",
+    "-baker-background": "#ffffff",
     "-baker-vertical-bounce": true,
     "-baker-index-height": 202,
     "-baker-media-autoplay": true,

@@ -31,6 +31,7 @@
 
 #import <UIKit/UIKit.h>
 #import <StoreKit/StoreKit.h>
+#import "iCarousel.h"
 
 #import "AQGridView.h"
 #import "BakerIssue.h"
@@ -41,7 +42,7 @@
 #import "PurchasesManager.h"
 #endif
 
-@interface ShelfViewController : UIViewController <AQGridViewDataSource, AQGridViewDelegate, UIActionSheetDelegate> {
+@interface ShelfViewController : UIViewController <iCarouselDelegate,iCarouselDataSource,UIActionSheetDelegate> {
     BakerAPI *api;
     IssuesManager *issuesManager;
     NSMutableArray *notRecognisedTransactions;
@@ -57,7 +58,8 @@
 @property (retain, nonatomic) NSMutableArray *issueViewControllers;
 @property (retain, nonatomic) ShelfStatus *shelfStatus;
 
-@property (strong, nonatomic) AQGridView *gridView;
+@property (strong, nonatomic)iCarousel *carousel;
+@property (nonatomic, assign) BOOL wrap;
 @property (strong, nonatomic) UIImageView *background;
 @property (strong, nonatomic) UIBarButtonItem *refreshButton;
 @property (strong, nonatomic) UIBarButtonItem *subscribeButton;

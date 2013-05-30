@@ -44,7 +44,7 @@
 
 @synthesize issues;
 @synthesize issueViewControllers;
-@synthesize gridView;
+@synthesize carousel;
 @synthesize subscribeButton;
 @synthesize refreshButton;
 @synthesize shelfStatus;
@@ -121,7 +121,7 @@
 
 - (void)dealloc
 {
-    [gridView release];
+//    [gridView release];
     [issueViewControllers release];
     [issues release];
     [subscribeButton release];
@@ -151,16 +151,23 @@
 
     self.background = [[[UIImageView alloc] init] autorelease];
 
-    self.gridView = [[[AQGridView alloc] init] autorelease];
-    self.gridView.dataSource = self;
-    self.gridView.delegate = self;
-    self.gridView.backgroundColor = [UIColor clearColor];
-
+//    self.gridView = [[[AQGridView alloc] init] autorelease];
+//    self.gridView.dataSource = self;
+//    self.gridView.delegate = self;
+//    self.gridView.backgroundColor = [UIColor clearColor];
+    
+    self.carousel = [[iCarousel alloc]init];
+    self.carousel.delegate = self;
+    self.carousel.dataSource =self;
+    self.carousel.backgroundColor = [UIColor clearColor];
+    self.carousel.type = iCarouselTypeCoverFlow2;
+    
     [self.view addSubview:self.background];
-    [self.view addSubview:self.gridView];
+    [self.view addSubview:self.carousel];
 
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
-    [self.gridView reloadData];
+//    [self.gridView reloadData];
+    [self.carousel reloadData];
 
     #ifdef BAKER_NEWSSTAND
     self.refreshButton = [[[UIBarButtonItem alloc]
@@ -260,11 +267,12 @@
     }
 
     int bannerHeight = [ShelfViewController getBannerHeight];
+    self.carousel.frame = CGRectMake(0, bannerHeight - 50, width, height - bannerHeight + 50);
 
     self.background.frame = CGRectMake(0, 0, width, height);
     self.background.image = [UIImage imageNamed:image];
 
-    self.gridView.frame = CGRectMake(0, bannerHeight, width, height - bannerHeight);
+//    self.gridView.frame = CGRectMake(0, bannerHeight, width, height - bannerHeight);
 }
 - (IssueViewController *)createIssueViewControllerWithIssue:(BakerIssue *)issue
 {
@@ -273,41 +281,41 @@
     return controller;
 }
 
-#pragma mark - Shelf data source
+//#pragma mark - Shelf data source
 
-- (NSUInteger)numberOfItemsInGridView:(AQGridView *)aGridView
-{
-    return [issueViewControllers count];
-}
-- (AQGridViewCell *)gridView:(AQGridView *)aGridView cellForItemAtIndex:(NSUInteger)index
-{
-    CGSize cellSize = [IssueViewController getIssueCellSize];
-    CGRect cellFrame = CGRectMake(0, 0, cellSize.width, cellSize.height);
-
-    static NSString *cellIdentifier = @"cellIdentifier";
-    AQGridViewCell *cell = (AQGridViewCell *)[self.gridView dequeueReusableCellWithIdentifier:cellIdentifier];
-	if (cell == nil)
-	{
-		cell = [[[AQGridViewCell alloc] initWithFrame:cellFrame reuseIdentifier:cellIdentifier] autorelease];
-		cell.selectionStyle = AQGridViewCellSelectionStyleNone;
-
-        cell.contentView.backgroundColor = [UIColor clearColor];
-        cell.backgroundColor = [UIColor clearColor];
-	}
-
-    IssueViewController *controller = [self.issueViewControllers objectAtIndex:index];
-    UIView *removableIssueView = [cell.contentView viewWithTag:42];
-    if (removableIssueView) {
-        [removableIssueView removeFromSuperview];
-    }
-    [cell.contentView addSubview:controller.view];
-
-    return cell;
-}
-- (CGSize)portraitGridCellSizeForGridView:(AQGridView *)aGridView
-{
-    return [IssueViewController getIssueCellSize];
-}
+//- (NSUInteger)numberOfItemsInGridView:(AQGridView *)aGridView
+//{
+//    return [issueViewControllers count];
+//}
+//- (AQGridViewCell *)gridView:(AQGridView *)aGridView cellForItemAtIndex:(NSUInteger)index
+//{
+//    CGSize cellSize = [IssueViewController getIssueCellSize];
+//    CGRect cellFrame = CGRectMake(0, 0, cellSize.width, cellSize.height);
+//
+//    static NSString *cellIdentifier = @"cellIdentifier";
+//    AQGridViewCell *cell = (AQGridViewCell *)[self.gridView dequeueReusableCellWithIdentifier:cellIdentifier];
+//	if (cell == nil)
+//	{
+//		cell = [[[AQGridViewCell alloc] initWithFrame:cellFrame reuseIdentifier:cellIdentifier] autorelease];
+//		cell.selectionStyle = AQGridViewCellSelectionStyleNone;
+//
+//        cell.contentView.backgroundColor = [UIColor clearColor];
+//        cell.backgroundColor = [UIColor clearColor];
+//	}
+//
+//    IssueViewController *controller = [self.issueViewControllers objectAtIndex:index];
+//    UIView *removableIssueView = [cell.contentView viewWithTag:42];
+//    if (removableIssueView) {
+//        [removableIssueView removeFromSuperview];
+//    }
+//    [cell.contentView addSubview:controller.view];
+//
+//    return cell;
+//}
+//- (CGSize)portraitGridCellSizeForGridView:(AQGridView *)aGridView
+//{
+//    return [IssueViewController getIssueCellSize];
+//}
 
 #ifdef BAKER_NEWSSTAND
 - (void)handleRefresh:(NSNotification *)notification {
@@ -335,7 +343,8 @@
             if (!existingIvc || ![[existingIvc issue].ID isEqualToString:issue.ID]) {
                 IssueViewController *ivc = [self createIssueViewControllerWithIssue:issue];
                 [self.issueViewControllers insertObject:ivc atIndex:idx];
-                [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
+//                [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
+                [self.carousel reloadData];
             } else {
                 existingIvc.issue = issue;
                 [existingIvc refreshContentWithCache:NO];
@@ -350,6 +359,88 @@
                       buttonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil)];
     }
     [self setrefreshButtonEnabled:YES];
+}
+
+#pragma mark iCarouselDelegate
+
+- (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
+{
+    return [issueViewControllers count];
+}
+
+- (NSUInteger)numberOfPlaceholdersInCarousel:(iCarousel *)carousel
+{
+    //note: placeholder views are only displayed on some carousels if wrapping is disabled
+    return 2;
+}
+
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
+{
+    
+//    NSLog(@"issueViewController =%d",[issueViewControllers count]);
+//  IssueViewController *issueViewController =  [issueViewControllers objectAtIndex:index];
+//    
+//    return issueViewController.view;
+    UILabel *label = nil;
+    
+    //create new view if no view is available for recycling
+    if (view == nil)
+    {
+        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] ;
+        ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
+        view.contentMode = UIViewContentModeCenter;
+        label = [[UILabel alloc] initWithFrame:view.bounds] ;
+        label.backgroundColor = [UIColor clearColor];
+        label.textAlignment = UITextAlignmentCenter;
+        label.font = [label.font fontWithSize:50];
+        label.tag = 1;
+        [view addSubview:label];
+    }
+    else
+    {
+        //get a reference to the label in the recycled view
+        label = (UILabel *)[view viewWithTag:1];
+    }
+    
+    //set item label
+    //remember to always set any properties of your carousel item
+    //views outside of the `if (view == nil) {...}` check otherwise
+    //you'll get weird issues with carousel item content appearing
+    //in the wrong place in the carousel
+    label.text = @"2";
+    
+    return view;
+}
+
+- (CGFloat)carousel:(iCarousel *)carouselInput valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+{
+    //customize carousel display
+    switch (option)
+    {
+        case iCarouselOptionWrap:
+        {
+            //normally you would hard-code this to YES or NO
+            return _wrap;
+        }
+        case iCarouselOptionSpacing:
+        {
+            //add a bit of spacing between the item views
+            return value * 1.05f;
+        }
+        case iCarouselOptionFadeMax:
+        {
+            if (carouselInput.type == iCarouselTypeCustom)
+            {
+                //set opacity based on distance from camera
+                return 0.0f;
+            }
+            return value;
+        }
+        default:
+        {
+            return value;
+        }
+    }
 }
 
 #pragma mark - Store Kit

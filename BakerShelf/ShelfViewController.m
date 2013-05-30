@@ -156,12 +156,18 @@
 //    self.gridView.delegate = self;
 //    self.gridView.backgroundColor = [UIColor clearColor];
     
-    self.carousel = [[iCarousel alloc]init];
-    self.carousel.delegate = self;
-    self.carousel.dataSource =self;
-    self.carousel.backgroundColor = [UIColor clearColor];
-    self.carousel.type = iCarouselTypeCoverFlow2;
+    _wrap = YES;
     
+    self.carousel = [[iCarousel alloc]init];
+    
+//    self.carousel.frame = CGRectMake(0, 0, 320, 480);
+//    [self.view addSubview:carousel];
+    
+    self.carousel.dataSource = self;
+    
+   self.carousel.delegate = self;
+    
+    carousel.type = iCarouselTypeCoverFlow2;
     [self.view addSubview:self.background];
     [self.view addSubview:self.carousel];
 
@@ -344,7 +350,7 @@
                 IssueViewController *ivc = [self createIssueViewControllerWithIssue:issue];
                 [self.issueViewControllers insertObject:ivc atIndex:idx];
 //                [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
-                [self.carousel reloadData];
+//                [self.carousel reloadData];
             } else {
                 existingIvc.issue = issue;
                 [existingIvc refreshContentWithCache:NO];
@@ -363,6 +369,7 @@
 
 #pragma mark iCarouselDelegate
 
+
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
     return [issueViewControllers count];
@@ -376,43 +383,40 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
-    
-//    NSLog(@"issueViewController =%d",[issueViewControllers count]);
-//  IssueViewController *issueViewController =  [issueViewControllers objectAtIndex:index];
+//    UILabel *label = nil;
 //    
-//    return issueViewController.view;
-    UILabel *label = nil;
-    
-    //create new view if no view is available for recycling
-    if (view == nil)
-    {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] ;
-        ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
-        view.contentMode = UIViewContentModeCenter;
-        label = [[UILabel alloc] initWithFrame:view.bounds] ;
-        label.backgroundColor = [UIColor clearColor];
-        label.textAlignment = UITextAlignmentCenter;
-        label.font = [label.font fontWithSize:50];
-        label.tag = 1;
-        [view addSubview:label];
-    }
-    else
-    {
-        //get a reference to the label in the recycled view
-        label = (UILabel *)[view viewWithTag:1];
-    }
-    
-    //set item label
-    //remember to always set any properties of your carousel item
-    //views outside of the `if (view == nil) {...}` check otherwise
-    //you'll get weird issues with carousel item content appearing
-    //in the wrong place in the carousel
-    label.text = @"2";
-    
+//    NSLog(@"%d",index);
+//    //create new view if no view is available for recycling
+//    if (view == nil)
+//    {
+//        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] ;
+//        ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
+//        view.contentMode = UIViewContentModeCenter;
+//        label = [[UILabel alloc] initWithFrame:view.bounds] ;
+//        label.backgroundColor = [UIColor clearColor];
+//        label.textAlignment = UITextAlignmentCenter;
+//        label.font = [label.font fontWithSize:50];
+//        label.tag = 1;
+//        [view addSubview:label];
+//    }
+//    else
+//    {
+//        //get a reference to the label in the recycled view
+//        label = (UILabel *)[view viewWithTag:1];
+//    }
+//    
+//    //set item label
+//    //remember to always set any properties of your carousel item
+//    //views outside of the `if (view == nil) {...}` check otherwise
+//    //you'll get weird issues with carousel item content appearing
+//    //in the wrong place in the carousel
+//    label.text = @"2";
+    IssueViewController *issueViewController = [self.issueViewControllers objectAtIndex:index];
+    view = issueViewController.view;
     return view;
 }
 
-- (CGFloat)carousel:(iCarousel *)carouselInput valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value
 {
     //customize carousel display
     switch (option)
@@ -429,7 +433,7 @@
         }
         case iCarouselOptionFadeMax:
         {
-            if (carouselInput.type == iCarouselTypeCustom)
+            if (carousel.type == iCarouselTypeCustom)
             {
                 //set opacity based on distance from camera
                 return 0.0f;

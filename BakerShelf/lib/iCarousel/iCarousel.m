@@ -1263,6 +1263,8 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     }
     else if (index >= _numberOfItems)
     {
+        NSLog(@"%d",index);
+        NSLog(@"%d",_numberOfItems);
         view = [_dataSource carousel:self placeholderViewAtIndex:_numberOfPlaceholdersToShow/2.0f + index - _numberOfItems reusingView:[self dequeuePlaceholderView]];
     }
     else

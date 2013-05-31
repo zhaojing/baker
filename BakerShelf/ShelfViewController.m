@@ -273,7 +273,7 @@
     }
 
     int bannerHeight = [ShelfViewController getBannerHeight];
-    self.carousel.frame = CGRectMake(0, bannerHeight - 50, width, height - bannerHeight + 50);
+    self.carousel.frame = CGRectMake(0, 50, width, height - bannerHeight + 50);
 
     self.background.frame = CGRectMake(0, 0, width, height);
     self.background.image = [UIImage imageNamed:image];
@@ -411,6 +411,12 @@
 //    //you'll get weird issues with carousel item content appearing
 //    //in the wrong place in the carousel
 //    label.text = @"2";
+    
+    
+    
+    
+    
+    
     IssueViewController *issueViewController = [self.issueViewControllers objectAtIndex:index];
     view = issueViewController.view;
     return view;

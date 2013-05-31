@@ -94,13 +94,16 @@
     CGSize cellSize = [IssueViewController getIssueCellSize];
 
     self.view.frame = CGRectMake(0, 0, cellSize.width, cellSize.height);
+    
+    
+
     self.view.backgroundColor = [UIColor clearColor];
     self.view.tag = 42;
 
     UI ui = [IssueViewController getIssueContentMeasures];
 
     self.issueCover = [UIButton buttonWithType:UIButtonTypeCustom];
-    issueCover.frame = CGRectMake(ui.cellPadding, ui.cellPadding, ui.thumbWidth, ui.thumbHeight);
+    issueCover.frame = CGRectMake(ui.cellPadding, ui.cellPadding, cellSize.width-20, cellSize.height-30);
 
     issueCover.backgroundColor = [UIColor colorWithHexString:ISSUES_COVER_BACKGROUND_COLOR];
     issueCover.adjustsImageWhenHighlighted = NO;
@@ -131,14 +134,14 @@
     [self.view addSubview:titleLabel];
 
     // SETUP INFO LABEL
-    self.infoLabel = [[[UILabel alloc] init] autorelease];
-    infoLabel.textColor = [UIColor colorWithHexString:ISSUES_INFO_COLOR];
-    infoLabel.backgroundColor = [UIColor clearColor];
-    infoLabel.lineBreakMode = UILineBreakModeTailTruncation;
-    infoLabel.textAlignment = UITextAlignmentLeft;
-    infoLabel.font = infoFont;
-
-    [self.view addSubview:infoLabel];
+//    self.infoLabel = [[[UILabel alloc] init] autorelease];
+//    infoLabel.textColor = [UIColor colorWithHexString:ISSUES_INFO_COLOR];
+//    infoLabel.backgroundColor = [UIColor clearColor];
+//    infoLabel.lineBreakMode = UILineBreakModeTailTruncation;
+//    infoLabel.textAlignment = UITextAlignmentLeft;
+//    infoLabel.font = infoFont;
+//
+//    [self.view addSubview:infoLabel];
 
     // SETUP PRICE LABEL
     self.priceLabel = [[[UILabel alloc] init] autorelease];
@@ -151,44 +154,44 @@
     [self.view addSubview:priceLabel];
 
     // SETUP ACTION BUTTON
-    self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    actionButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ACTION_BUTTON_BACKGROUND_COLOR];
-    actionButton.titleLabel.font = actionFont;
-
-    [actionButton setTitle:NSLocalizedString(@"ACTION_DOWNLOADED_TEXT", nil) forState:UIControlStateNormal];
-    [actionButton setTitleColor:[UIColor colorWithHexString:ISSUES_ACTION_BUTTON_COLOR] forState:UIControlStateNormal];
-    [actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-    [self.view addSubview:actionButton];
+//    self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    actionButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ACTION_BUTTON_BACKGROUND_COLOR];
+//    actionButton.titleLabel.font = actionFont;
+//
+//    [actionButton setTitle:NSLocalizedString(@"ACTION_DOWNLOADED_TEXT", nil) forState:UIControlStateNormal];
+//    [actionButton setTitleColor:[UIColor colorWithHexString:ISSUES_ACTION_BUTTON_COLOR] forState:UIControlStateNormal];
+//    [actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    [self.view addSubview:actionButton];
 
     // SETUP ARCHIVE BUTTON
-    self.archiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    archiveButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ARCHIVE_BUTTON_BACKGROUND_COLOR];
-    archiveButton.titleLabel.font = archiveFont;
-
-    [archiveButton setTitle:NSLocalizedString(@"ARCHIVE_TEXT", nil) forState:UIControlStateNormal];
-    [archiveButton setTitleColor:[UIColor colorWithHexString:ISSUES_ARCHIVE_BUTTON_COLOR] forState:UIControlStateNormal];
-    [archiveButton addTarget:self action:@selector(archiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-
-    #ifdef BAKER_NEWSSTAND
-    [self.view addSubview:archiveButton];
-    #endif
+//    self.archiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//    archiveButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ARCHIVE_BUTTON_BACKGROUND_COLOR];
+//    archiveButton.titleLabel.font = archiveFont;
+//
+//    [archiveButton setTitle:NSLocalizedString(@"ARCHIVE_TEXT", nil) forState:UIControlStateNormal];
+//    [archiveButton setTitleColor:[UIColor colorWithHexString:ISSUES_ARCHIVE_BUTTON_COLOR] forState:UIControlStateNormal];
+//    [archiveButton addTarget:self action:@selector(archiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//
+//    #ifdef BAKER_NEWSSTAND
+//    [self.view addSubview:archiveButton];
+//    #endif
 
     // SETUP DOWN/LOADING SPINNER AND LABEL
-    self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
-    spinner.color = [UIColor colorWithHexString:ISSUES_LOADING_SPINNER_COLOR];
-    spinner.backgroundColor = [UIColor clearColor];
-    spinner.hidesWhenStopped = YES;
-
-    self.loadingLabel = [[[UILabel alloc] init] autorelease];
-    loadingLabel.textColor = [UIColor colorWithHexString:ISSUES_LOADING_LABEL_COLOR];
-    loadingLabel.backgroundColor = [UIColor clearColor];
-    loadingLabel.textAlignment = UITextAlignmentLeft;
-    loadingLabel.text = NSLocalizedString(@"DOWNLOADING_TEXT", nil);
-    loadingLabel.font = actionFont;
-
-    [self.view addSubview:spinner];
-    [self.view addSubview:loadingLabel];
+//    self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
+//    spinner.color = [UIColor colorWithHexString:ISSUES_LOADING_SPINNER_COLOR];
+//    spinner.backgroundColor = [UIColor clearColor];
+//    spinner.hidesWhenStopped = YES;
+//
+//    self.loadingLabel = [[[UILabel alloc] init] autorelease];
+//    loadingLabel.textColor = [UIColor colorWithHexString:ISSUES_LOADING_LABEL_COLOR];
+//    loadingLabel.backgroundColor = [UIColor clearColor];
+//    loadingLabel.textAlignment = UITextAlignmentLeft;
+//    loadingLabel.text = NSLocalizedString(@"DOWNLOADING_TEXT", nil);
+//    loadingLabel.font = actionFont;
+//
+//    [self.view addSubview:spinner];
+//    [self.view addSubview:loadingLabel];
 
     // SETUP PROGRESS BAR
     self.progressBar = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault] autorelease];
@@ -223,24 +226,30 @@
     CGSize titleSize = [self.issue.title sizeWithFont:titleFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
     uint titleLines = MIN(4, titleSize.height / textLineheight);
 
-    titleLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight * titleLines);
+    CGSize cellSize = [IssueViewController getIssueCellSize];
+    
+    titleLabel.frame = CGRectMake(0, cellSize.height-20, 170, textLineheight * titleLines);
     titleLabel.numberOfLines = titleLines;
     titleLabel.text = self.issue.title;
 
+     NSLog(@"赵静 self.issue.info =%@",self.issue.title);
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
 
     // SETUP INFO LABEL
-    CGSize infoSize = [self.issue.info sizeWithFont:infoFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
-    uint infoLines = MIN(4, infoSize.height / textLineheight);
+//    CGSize infoSize = [self.issue.info sizeWithFont:infoFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+//    uint infoLines = MIN(4, infoSize.height / textLineheight);
 
-    infoLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight * infoLines);
-    infoLabel.numberOfLines = infoLines;
-    infoLabel.text = self.issue.info;
+//    infoLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight * infoLines);
+//    infoLabel.numberOfLines = infoLines;
+//    infoLabel.text = self.issue.info;
+//    
+//    NSLog(@"赵静 self.issue.info =%@",self.issue.info);
 
-    heightOffset = heightOffset + infoLabel.frame.size.height + 5;
+//    heightOffset = heightOffset + infoLabel.frame.size.height + 5;
 
     // SETUP PRICE LABEL
-    self.priceLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight);
+//    self.priceLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight);
+    self.priceLabel.frame = CGRectMake(0, cellSize.height-10, 170, textLineheight);
 
     heightOffset = heightOffset + priceLabel.frame.size.height + 10;
 
@@ -646,7 +655,7 @@
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         UI iPad = {
-            .cellPadding   = 30,
+            .cellPadding   = 0,
             .thumbWidth    = 135,
             .thumbHeight   = 180,
             .contentOffset = 184
@@ -666,7 +675,7 @@
 + (int)getIssueCellHeight
 {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return 240;
+        return 500;
     } else {
         return 190;
     }

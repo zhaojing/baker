@@ -350,7 +350,7 @@
                 IssueViewController *ivc = [self createIssueViewControllerWithIssue:issue];
                 [self.issueViewControllers insertObject:ivc atIndex:idx];
 //                [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
-//                [self.carousel reloadData];
+                [self.carousel reloadData];
             } else {
                 existingIvc.issue = issue;
                 [existingIvc refreshContentWithCache:NO];

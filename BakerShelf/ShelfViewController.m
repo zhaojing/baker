@@ -40,8 +40,14 @@
 #import "NSString+Extensions.h"
 #import "Utils.h"
 
-@implementation ShelfViewController
+@interface ShelfViewController ()
 
+@property (strong, nonatomic)UIButton *shareButton;
+@property (strong, nonatomic)UIButton *sysTemButton;
+
+@end
+
+@implementation ShelfViewController
 @synthesize issues;
 @synthesize issueViewControllers;
 @synthesize carousel;
@@ -52,6 +58,8 @@
 @synthesize supportedOrientation;
 @synthesize blockingProgressView;
 @synthesize bookToBeProcessed;
+@synthesize shareButton;
+@synthesize sysTemButton;
 
 #pragma mark - Init
 
@@ -187,7 +195,16 @@
     [self.refreshButton addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.refreshButton];
     
+    self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.shareButton setBackgroundImage:[UIImage imageNamed:@"shelf_bg_share.png"] forState:UIControlStateNormal];
+    [self.shareButton addTarget:self action:@selector(handleShare:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.shareButton];
     
+    self.sysTemButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.sysTemButton setBackgroundImage:[UIImage imageNamed:@"shelf_bg_system.png"] forState:UIControlStateNormal];
+    [self.sysTemButton addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.sysTemButton];
+     
 
     self.subscribeButton = [[[UIBarButtonItem alloc]
                              initWithTitle: NSLocalizedString(@"SUBSCRIBE_BUTTON_TEXT", nil)
@@ -285,6 +302,9 @@
     int bannerHeight = [ShelfViewController getBannerHeight];
     self.carousel.frame = CGRectMake(0, 50, width, height - bannerHeight + 50);
     self.refreshButton.frame = CGRectMake(44, 16, 30, 30);
+    self.shareButton.frame = CGRectMake(size.height - 100, 16, 30, 30);
+    self.sysTemButton.frame = CGRectMake(size.height-50, 16, 30, 30);
+    
 
     self.background.frame = CGRectMake(0, 0, width, height);
     self.background.image = [UIImage imageNamed:image];

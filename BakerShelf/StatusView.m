@@ -35,26 +35,29 @@
         _tap.numberOfTouchesRequired = 1;
         [self addGestureRecognizer:_tap];
         
-        // downloadImages
-        _downloadImage = [[UIImageView alloc] initWithFrame:CGRectMake(95, 0, 88, 88)];
-        _downloadImage.hidden = YES;
-        _downloadImage.image = [UIImage imageNamed:@"download-bg.png"];
-        [self addSubview:_downloadImage];
-        
-        // downloadingImage
-        _downloadingImage = [[UIImageView alloc] initWithFrame:CGRectMake(95, 0, 88, 88)];
-        _downloadingImage.hidden = YES;
-        _downloadingImage.image = [UIImage imageNamed:@"downloading-bg.png"];
-        [self addSubview:_downloadingImage];
+//        // downloadImages
+//        _downloadImage = [[UIImageView alloc] initWithFrame:CGRectMake(95, 0, 88, 88)];
+//        _downloadImage.hidden = YES;
+//        _downloadImage.image = [UIImage imageNamed:@"download-bg.png"];
+//        [self addSubview:_downloadImage];
+//        
+//        // downloadingImage
+//        _downloadingImage = [[UIImageView alloc] initWithFrame:CGRectMake(95, 0, 88, 88)];
+//        _downloadingImage.hidden = YES;
+//        _downloadingImage.image = [UIImage imageNamed:@"downloading-bg.png"];
+//        [self addSubview:_downloadingImage];
         
         // proLabel
-        _proLabel = [[UILabel alloc] initWithFrame:CGRectMake(128, 8, 70, 20)];
-        _proLabel.font = [UIFont fontWithName:@"Arial" size:12];
+    
+        _proLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 70, 20)];
+        _proLabel.font = [UIFont fontWithName:@"Arial" size:20];
         _proLabel.textAlignment = NSTextAlignmentCenter;
-        _proLabel.hidden = YES;
+        _proLabel.textColor = [UIColor whiteColor];
+        _proLabel.hidden = NO;
         _proLabel.backgroundColor = [UIColor clearColor];
         _proLabel.text = @"0%";
-        [self insertSubview:_proLabel aboveSubview:_downloadingImage];
+//        [self insertSubview:_proLabel aboveSubview:_downloadingImage];
+        [self addSubview:_proLabel];
         
         self.pro = 0.0f;
         self.downloadStatus = Nothing;
@@ -90,24 +93,24 @@
     {
         case Nothing:
         {
-            _downloadImage.hidden = NO;
-            _downloadingImage.hidden = YES;
-            _proLabel.hidden = YES;
+//            _downloadImage.hidden = NO;
+//            _downloadingImage.hidden = YES;
+//            _proLabel.hidden = YES;
             
             _proLabel.text = @"0%";
             break;
         }
         case Downloading:
         {
-            _downloadImage.hidden = YES;
-            _downloadingImage.hidden = NO;
+//            _downloadImage.hidden = YES;
+//            _downloadingImage.hidden = NO;
             _proLabel.hidden = NO;
             break;
         }
         case Finished:
         {
-            _downloadImage.hidden = YES;
-            _downloadingImage.hidden = YES;
+//            _downloadImage.hidden = YES;
+//            _downloadingImage.hidden = YES;
             _proLabel.hidden = YES;
             
             if ([self.delegate respondsToSelector:@selector(end:)])

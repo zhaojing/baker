@@ -34,12 +34,19 @@
 #import "IssueViewController.h"
 #import "SSZipArchive.h"
 #import "UIConstants.h"
+#import "StatusView.h"
 #ifdef BAKER_NEWSSTAND
 #import "PurchasesManager.h"
 #endif
 
 #import "UIColor+Extensions.h"
 #import "Utils.h"
+
+@interface IssueViewController()
+@property (strong, nonatomic) StatusView *statusview;
+@property (strong, nonatomic) UILongPressGestureRecognizer *longPress;
+@property (strong, nonatomic) UITapGestureRecognizer *tap;
+@end
 
 @implementation IssueViewController
 
@@ -48,7 +55,7 @@
 @synthesize issue;
 @synthesize actionButton;
 @synthesize archiveButton;
-@synthesize progressBar;
+//@synthesize progressBar;
 @synthesize spinner;
 @synthesize loadingLabel;
 @synthesize priceLabel;
@@ -60,6 +67,8 @@
 @synthesize titleLabel;
 @synthesize infoLabel;
 
+@synthesize longPress;
+@synthesize tap;
 @synthesize currentStatus;
 
 #pragma mark - Init
@@ -114,15 +123,15 @@
     issueCover.layer.shadowOffset = CGSizeMake(0, 2);
     issueCover.layer.shouldRasterize = YES;
     issueCover.layer.rasterizationScale = [UIScreen mainScreen].scale;
-
-    [issueCover addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    
+//    [issueCover addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:issueCover];
 
     // SETUP USED FONTS
     self.titleFont = [UIFont fontWithName:ISSUES_TITLE_FONT size:ISSUES_TITLE_FONT_SIZE];
     self.infoFont = [UIFont fontWithName:ISSUES_INFO_FONT size:ISSUES_INFO_FONT_SIZE];
-    UIFont *actionFont = [UIFont fontWithName:ISSUES_ACTION_BUTTON_FONT size:ISSUES_ACTION_BUTTON_FONT_SIZE];
-    UIFont *archiveFont = [UIFont fontWithName:ISSUES_ARCHIVE_BUTTON_FONT size:ISSUES_ARCHIVE_BUTTON_FONT_SIZE];
+//    UIFont *actionFont = [UIFont fontWithName:ISSUES_ACTION_BUTTON_FONT size:ISSUES_ACTION_BUTTON_FONT_SIZE];
+//    UIFont *archiveFont = [UIFont fontWithName:ISSUES_ARCHIVE_BUTTON_FONT size:ISSUES_ARCHIVE_BUTTON_FONT_SIZE];
 
     // SETUP TITLE LABEL
     self.titleLabel = [[[UILabel alloc] init] autorelease];
@@ -137,15 +146,6 @@
     tapReadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:tapReadButton];
  
-    // SETUP INFO LABEL
-//    self.infoLabel = [[[UILabel alloc] init] autorelease];
-//    infoLabel.textColor = [UIColor colorWithHexString:ISSUES_INFO_COLOR];
-//    infoLabel.backgroundColor = [UIColor clearColor];
-//    infoLabel.lineBreakMode = UILineBreakModeTailTruncation;
-//    infoLabel.textAlignment = UITextAlignmentLeft;
-//    infoLabel.font = infoFont;
-//
-//    [self.view addSubview:infoLabel];
 
     // SETUP PRICE LABEL
     self.priceLabel = [[[UILabel alloc] init] autorelease];
@@ -156,7 +156,19 @@
     priceLabel.font = titleFont;
 
     [self.view addSubview:priceLabel];
-
+    
+#ifdef BAKER_NEWSSTAND
+    self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(actionLongPress:)];
+    longPress.numberOfTouchesRequired = 1;
+    [self.issueCover addGestureRecognizer:longPress];
+    
+    self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionButtonPressed:)];
+    tap.numberOfTouchesRequired = 1;
+    [self.issueCover addGestureRecognizer:tap];
+#endif
+    
+    
+    
     // SETUP ACTION BUTTON
 //    self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
 //    actionButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ACTION_BUTTON_BACKGROUND_COLOR];
@@ -198,10 +210,14 @@
 //    [self.view addSubview:loadingLabel];
 
     // SETUP PROGRESS BAR
-    self.progressBar = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault] autorelease];
-    self.progressBar.progressTintColor = [UIColor colorWithHexString:ISSUES_PROGRESSBAR_TINT_COLOR];
-
-    [self.view addSubview:progressBar];
+//    self.progressBar = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault] autorelease];
+//    self.progressBar.progressTintColor = [UIColor colorWithHexString:ISSUES_PROGRESSBAR_TINT_COLOR];
+//
+//    [self.view addSubview:progressBar];
+    
+    self.statusview = [[StatusView alloc]initWithFrame:CGRectMake(cellSize.width-120, cellSize.height-10, 105, 36)];
+    [self.statusview setBackgroundColor:[UIColor redColor]];
+    [self.view addSubview:self.statusview];
 
     #ifdef BAKER_NEWSSTAND
     // RESUME PENDING NEWSSTAND DOWNLOAD
@@ -239,7 +255,7 @@
      NSLog(@"赵静 self.issue.info =%@",self.issue.title);
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
     
-    tapReadButton.frame = CGRectMake(cellSize.width-105, cellSize.height-36, 105, 36);
+    tapReadButton.frame = CGRectMake(cellSize.width-120, cellSize.height-10, 105, 36);
 
     // SETUP INFO LABEL
 //    CGSize infoSize = [self.issue.info sizeWithFont:infoFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
@@ -277,7 +293,7 @@
     heightOffset = heightOffset + self.loadingLabel.frame.size.height + 5;
 
     // SETUP PROGRESS BAR
-    self.progressBar.frame = CGRectMake(ui.contentOffset, heightOffset, 170, 30);
+//    self.progressBar.frame = CGRectMake(ui.contentOffset, heightOffset, 170, 30);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -302,9 +318,12 @@
 
         self.actionButton.hidden = NO;
         self.archiveButton.hidden = YES;
-        self.progressBar.hidden = YES;
+//        self.progressBar.hidden = YES;
         self.loadingLabel.hidden = YES;
         self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
         [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"connecting"])
@@ -314,11 +333,14 @@
 
         self.actionButton.hidden = YES;
         self.archiveButton.hidden = YES;
-        self.progressBar.progress = 0;
+//        self.progressBar.progress = 0;
         self.loadingLabel.text = NSLocalizedString(@"CONNECTING_TEXT", nil);
         self.loadingLabel.hidden = NO;
-        self.progressBar.hidden = YES;
-        self.priceLabel.hidden = YES;
+//        self.progressBar.hidden = YES;
+        self.priceLabel.hidden = NO;
+     
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
         [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"downloading"])
@@ -328,12 +350,14 @@
 
         self.actionButton.hidden = YES;
         self.archiveButton.hidden = YES;
-        self.progressBar.progress = 0;
+//        self.progressBar.progress = 0;
         self.loadingLabel.text = NSLocalizedString(@"DOWNLOADING_TEXT", nil);
         self.loadingLabel.hidden = NO;
-        self.progressBar.hidden = NO;
-        self.priceLabel.hidden = YES;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+//        self.progressBar.hidden = NO;
+        self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = NO;
+        self.tapReadButton.hidden = YES;
     }
     else if ([status isEqualToString:@"downloaded"])
     {
@@ -343,8 +367,11 @@
                 self.actionButton.hidden = NO;
         self.archiveButton.hidden = NO;
         self.loadingLabel.hidden = YES;
-        self.progressBar.hidden = YES;
-        self.priceLabel.hidden = YES;
+//        self.progressBar.hidden = YES;
+        self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
         [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-read.png"] forState:UIControlStateNormal];
     
     }
@@ -355,8 +382,13 @@
         self.actionButton.hidden = NO;
         self.archiveButton.hidden = YES;
         self.loadingLabel.hidden = YES;
-        self.progressBar.hidden = YES;
-        self.priceLabel.hidden = YES;
+//        self.progressBar.hidden = YES;
+        self.priceLabel.hidden = NO;
+        
+        
+        self.statusview.hidden= YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-read.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"opening"])
     {
@@ -366,8 +398,12 @@
         self.archiveButton.hidden = YES;
         self.loadingLabel.text = NSLocalizedString(@"OPENING_TEXT", nil);
         self.loadingLabel.hidden = NO;
-        self.progressBar.hidden = YES;
-        self.priceLabel.hidden = YES;
+//        self.progressBar.hidden = YES;
+        self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"purchasable"])
     {
@@ -380,9 +416,13 @@
         
         self.actionButton.hidden = NO;
         self.archiveButton.hidden = YES;
-        self.progressBar.hidden = YES;
+//        self.progressBar.hidden = YES;
         self.loadingLabel.hidden = YES;
         self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"purchasing"])
     {
@@ -393,9 +433,13 @@
 
         self.actionButton.hidden = YES;
         self.archiveButton.hidden = YES;
-        self.progressBar.hidden = YES;
+//        self.progressBar.hidden = YES;
         self.loadingLabel.hidden = NO;
         self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"purchased"])
     {
@@ -407,9 +451,13 @@
 
         self.actionButton.hidden = NO;
         self.archiveButton.hidden = YES;
-        self.progressBar.hidden = YES;
+//        self.progressBar.hidden = YES;
         self.loadingLabel.hidden = YES;
         self.priceLabel.hidden = NO;
+        
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"unpriced"])
     {
@@ -419,9 +467,13 @@
 
         self.actionButton.hidden = YES;
         self.archiveButton.hidden = YES;
-        self.progressBar.hidden = YES;
+//        self.progressBar.hidden = YES;
         self.loadingLabel.hidden = NO;
         self.priceLabel.hidden = YES;
+
+        self.statusview.hidden = YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
 
     [self refreshContentWithCache:YES];
@@ -436,7 +488,7 @@
     [issue release];
     [actionButton release];
     [archiveButton release];
-    [progressBar release];
+//    [progressBar release];
     [spinner release];
     [loadingLabel release];
     [priceLabel release];
@@ -585,7 +637,8 @@
         self.issue.transientStatus = BakerIssueTransientStatusDownloading;
         [self refresh];
     }
-    [self.progressBar setProgress:(bytesWritten / bytesExpected) animated:YES];
+//    [self.progressBar setProgress:(bytesWritten / bytesExpected) animated:YES];
+    [self.statusview setPro:(bytesWritten / bytesExpected)];
 }
 - (void)handleDownloadFinished:(NSNotification *)notification {
     self.issue.transientStatus = BakerIssueTransientStatusNone;
@@ -603,6 +656,15 @@
 #pragma mark - Newsstand archive management
 
 #ifdef BAKER_NEWSSTAND
+
+- (void) actionLongPress:(UILongPressGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateBegan)
+    {
+        [self archiveButtonPressed:nil];
+    }
+}
+
 - (void)archiveButtonPressed:(UIButton *)sender
 {
     UIAlertView *updateAlert = [[UIAlertView alloc]

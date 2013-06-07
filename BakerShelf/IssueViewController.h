@@ -46,7 +46,8 @@
 @property (strong, nonatomic) BakerIssue *issue;
 @property (strong, nonatomic) UIButton *actionButton;
 @property (strong, nonatomic) UIButton *archiveButton;
-@property (strong, nonatomic) UIProgressView *progressBar;
+//@property (strong, nonatomic) UIProgressView *progressBar;
+
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 @property (strong, nonatomic) UILabel *loadingLabel;
 @property (strong, nonatomic) UILabel *priceLabel;

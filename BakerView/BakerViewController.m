@@ -175,6 +175,8 @@
 
         [super viewWillAppear:animated];
         [self.navigationController.navigationBar setTranslucent:YES];
+        [self.navigationController setNavigationBarHidden:NO];
+        [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar2-bg.png"] forBarMetrics:UIBarMetricsDefault];
 
         // Prevent duplicate observers
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"notification_touch_intercepted" object:nil];
@@ -822,7 +824,7 @@
             [self updateScreenshots];
 
             if (![self checkScreeshotForPage:currentPageNumber andOrientation:[self getCurrentInterfaceOrientation:self.interfaceOrientation]]) {
-                [self lockPage:[NSNumber numberWithBool:YES]];
+                [self lockPage:[NSNumber numberWithBool:NO]];
             }
 
             [self addPageLoading:0];

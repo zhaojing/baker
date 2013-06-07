@@ -54,6 +54,7 @@
 @synthesize priceLabel;
 
 @synthesize issueCover;
+@synthesize tapReadButton;
 @synthesize titleFont;
 @synthesize infoFont;
 @synthesize titleLabel;
@@ -132,7 +133,10 @@
     titleLabel.font = titleFont;
 
     [self.view addSubview:titleLabel];
-
+      
+    tapReadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.view addSubview:tapReadButton];
+ 
     // SETUP INFO LABEL
 //    self.infoLabel = [[[UILabel alloc] init] autorelease];
 //    infoLabel.textColor = [UIColor colorWithHexString:ISSUES_INFO_COLOR];
@@ -234,6 +238,8 @@
 
      NSLog(@"赵静 self.issue.info =%@",self.issue.title);
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
+    
+    tapReadButton.frame = CGRectMake(cellSize.width-105, cellSize.height-36, 105, 36);
 
     // SETUP INFO LABEL
 //    CGSize infoSize = [self.issue.info sizeWithFont:infoFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
@@ -277,6 +283,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+//    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar-bg.png"] forBarMetrics:UIBarMetricsDefault];
     [self refresh];
 }
 - (void)refresh
@@ -298,6 +305,7 @@
         self.progressBar.hidden = YES;
         self.loadingLabel.hidden = YES;
         self.priceLabel.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"connecting"])
     {
@@ -311,6 +319,7 @@
         self.loadingLabel.hidden = NO;
         self.progressBar.hidden = YES;
         self.priceLabel.hidden = YES;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"downloading"])
     {
@@ -324,24 +333,25 @@
         self.loadingLabel.hidden = NO;
         self.progressBar.hidden = NO;
         self.priceLabel.hidden = YES;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"downloaded"])
     {
         NSLog(@"[BakerShelf] '%@' is Ready to be Read.", self.issue.ID);
         [self.actionButton setTitle:NSLocalizedString(@"ACTION_DOWNLOADED_TEXT", nil) forState:UIControlStateNormal];
         [self.spinner stopAnimating];
-
-        self.actionButton.hidden = NO;
+                self.actionButton.hidden = NO;
         self.archiveButton.hidden = NO;
         self.loadingLabel.hidden = YES;
         self.progressBar.hidden = YES;
         self.priceLabel.hidden = YES;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-read.png"] forState:UIControlStateNormal];
+    
     }
     else if ([status isEqualToString:@"bundled"])
     {
         [self.actionButton setTitle:NSLocalizedString(@"ACTION_DOWNLOADED_TEXT", nil) forState:UIControlStateNormal];
         [self.spinner stopAnimating];
-
         self.actionButton.hidden = NO;
         self.archiveButton.hidden = YES;
         self.loadingLabel.hidden = YES;
@@ -367,7 +377,7 @@
         if (self.issue.price) {
             [self.priceLabel setText:self.issue.price];
         }
-
+        
         self.actionButton.hidden = NO;
         self.archiveButton.hidden = YES;
         self.progressBar.hidden = YES;

@@ -61,7 +61,10 @@
 @property (strong, nonatomic)iCarousel *carousel;
 @property (nonatomic, assign) BOOL wrap;
 @property (strong, nonatomic) UIImageView *background;
-@property (strong, nonatomic) UIBarButtonItem *refreshButton;
+//@property (strong, nonatomic) UIBarButtonItem *refreshButton;
+@property (strong, nonatomic)UIButton *refreshButton;
+
+
 @property (strong, nonatomic) UIBarButtonItem *subscribeButton;
 
 @property (strong, nonatomic) UIActionSheet *subscriptionsActionSheet;

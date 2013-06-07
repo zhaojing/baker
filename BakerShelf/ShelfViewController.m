@@ -176,11 +176,18 @@
     [self.carousel reloadData];
 
     #ifdef BAKER_NEWSSTAND
-    self.refreshButton = [[[UIBarButtonItem alloc]
-                                       initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                       target:self
-                                       action:@selector(handleRefresh:)]
-                                      autorelease];
+//    self.refreshButton = [[[UIBarButtonItem alloc]
+//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+//                                       target:self
+//                                       action:@selector(handleRefresh:)]
+//                                      autorelease];
+    
+    self.refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.refreshButton setBackgroundImage:[UIImage imageNamed:@"shelf_bg_refresh.png"] forState:UIControlStateNormal];
+    [self.refreshButton addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.refreshButton];
+    
+    
 
     self.subscribeButton = [[[UIBarButtonItem alloc]
                              initWithTitle: NSLocalizedString(@"SUBSCRIBE_BUTTON_TEXT", nil)
@@ -212,6 +219,7 @@
 {
     [super viewWillAppear:animated];
     [self.navigationController.navigationBar setTranslucent:NO];
+    [self.navigationController setNavigationBarHidden:YES];
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
 
     for (IssueViewController *controller in self.issueViewControllers) {
@@ -220,11 +228,11 @@
     }
 
     #ifdef BAKER_NEWSSTAND
-    NSMutableArray *buttonItems = [NSMutableArray arrayWithObject:self.refreshButton];
-    if ([purchasesManager hasSubscriptions] || [issuesManager hasProductIDs]) {
-        [buttonItems addObject:self.subscribeButton];
-    }
-    self.navigationItem.leftBarButtonItems = buttonItems;
+//    NSMutableArray *buttonItems = [NSMutableArray arrayWithObject:self.refreshButton];
+//    if ([purchasesManager hasSubscriptions] || [issuesManager hasProductIDs]) {
+//        [buttonItems addObject:self.subscribeButton];
+//    }
+//    self.navigationItem.leftBarButtonItems = buttonItems;
     #endif
 }
 - (void)viewDidAppear:(BOOL)animated
@@ -250,16 +258,18 @@
     int width  = 0;
     int height = 0;
 
+    CGRect rect = [UIApplication sharedApplication].statusBarFrame;
+        
     NSString *image = @"";
     CGSize size = [UIScreen mainScreen].bounds.size;
-
+    
     if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
         width  = size.width;
         height = size.height - 64;
         image  = @"shelf-bg-portrait";
     } else if (UIInterfaceOrientationIsLandscape(toInterfaceOrientation)) {
         width  = size.height;
-        height = size.width - 64;
+        height = size.width - rect.size.width;
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
             height = height + 12;
         }
@@ -274,6 +284,7 @@
 
     int bannerHeight = [ShelfViewController getBannerHeight];
     self.carousel.frame = CGRectMake(0, 50, width, height - bannerHeight + 50);
+    self.refreshButton.frame = CGRectMake(44, 16, 30, 30);
 
     self.background.frame = CGRectMake(0, 0, width, height);
     self.background.image = [UIImage imageNamed:image];
@@ -383,40 +394,6 @@
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSUInteger)index reusingView:(UIView *)view
 {
-//    UILabel *label = nil;
-//    
-//    NSLog(@"%d",index);
-//    //create new view if no view is available for recycling
-//    if (view == nil)
-//    {
-//        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 200.0f, 200.0f)] ;
-//        ((UIImageView *)view).image = [UIImage imageNamed:@"page.png"];
-//        view.contentMode = UIViewContentModeCenter;
-//        label = [[UILabel alloc] initWithFrame:view.bounds] ;
-//        label.backgroundColor = [UIColor clearColor];
-//        label.textAlignment = UITextAlignmentCenter;
-//        label.font = [label.font fontWithSize:50];
-//        label.tag = 1;
-//        [view addSubview:label];
-//    }
-//    else
-//    {
-//        //get a reference to the label in the recycled view
-//        label = (UILabel *)[view viewWithTag:1];
-//    }
-//    
-//    //set item label
-//    //remember to always set any properties of your carousel item
-//    //views outside of the `if (view == nil) {...}` check otherwise
-//    //you'll get weird issues with carousel item content appearing
-//    //in the wrong place in the carousel
-//    label.text = @"2";
-    
-    
-    
-    
-    
-    
     IssueViewController *issueViewController = [self.issueViewControllers objectAtIndex:index];
     view = issueViewController.view;
     return view;

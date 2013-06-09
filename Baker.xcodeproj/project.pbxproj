@@ -71,25 +71,41 @@
 		BF3CCCA315D080560087B9CA /* ios-icon-ipad@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3CCC9F15D080560087B9CA /* ios-icon-ipad@2x.png */; };
 		BF3CCCA415D080560087B9CA /* ios-icon-iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3CCCA015D080560087B9CA /* ios-icon-iphone.png */; };
 		BF3CCCA515D080560087B9CA /* ios-icon-iphone@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3CCCA115D080560087B9CA /* ios-icon-iphone@2x.png */; };
-		D09B928917619A4C00A0D3B6 /* navigation-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B927A17619A4C00A0D3B6 /* navigation-bar-bg.png */; };
-		D09B928A17619A4C00A0D3B6 /* navigation-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B927B17619A4C00A0D3B6 /* navigation-bar-bg@2x.png */; };
-		D09B928B17619A4C00A0D3B6 /* shelf-bg-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B927C17619A4C00A0D3B6 /* shelf-bg-landscape-568h.png */; };
-		D09B928C17619A4C00A0D3B6 /* shelf-bg-landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B927D17619A4C00A0D3B6 /* shelf-bg-landscape@2x~ipad.png */; };
-		D09B928D17619A4C00A0D3B6 /* shelf-bg-landscape@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B927E17619A4C00A0D3B6 /* shelf-bg-landscape@2x~iphone.png */; };
-		D09B928E17619A4C00A0D3B6 /* shelf-bg-landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B927F17619A4C00A0D3B6 /* shelf-bg-landscape~ipad.png */; };
-		D09B928F17619A4C00A0D3B6 /* shelf-bg-landscape~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928017619A4C00A0D3B6 /* shelf-bg-landscape~iphone.png */; };
-		D09B929017619A4C00A0D3B6 /* shelf-bg-portrait-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928117619A4C00A0D3B6 /* shelf-bg-portrait-568h.png */; };
-		D09B929117619A4C00A0D3B6 /* shelf-bg-portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928217619A4C00A0D3B6 /* shelf-bg-portrait@2x~ipad.png */; };
-		D09B929217619A4C00A0D3B6 /* shelf-bg-portrait@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928317619A4C00A0D3B6 /* shelf-bg-portrait@2x~iphone.png */; };
-		D09B929317619A4C00A0D3B6 /* shelf-bg-portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928417619A4C00A0D3B6 /* shelf-bg-portrait~ipad.png */; };
-		D09B929417619A4C00A0D3B6 /* shelf-bg-portrait~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928517619A4C00A0D3B6 /* shelf-bg-portrait~iphone.png */; };
-		D09B929517619A4C00A0D3B6 /* shelf_bg_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928617619A4C00A0D3B6 /* shelf_bg_refresh.png */; };
-		D09B929617619A4C00A0D3B6 /* shelf_bg_share.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928717619A4C00A0D3B6 /* shelf_bg_share.png */; };
-		D09B929717619A4C00A0D3B6 /* shelf_bg_system.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B928817619A4C00A0D3B6 /* shelf_bg_system.png */; };
-		D09B929A1761AA1100A0D3B6 /* shelf-button-read.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B92981761AA1100A0D3B6 /* shelf-button-read.png */; };
-		D09B929B1761AA1100A0D3B6 /* shelf-button-Subscription.png in Resources */ = {isa = PBXBuildFile; fileRef = D09B92991761AA1100A0D3B6 /* shelf-button-Subscription.png */; };
+		D009107B176453B4005ACF6C /* libWeChatSDK_armv7_armv7s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0091062176453B4005ACF6C /* libWeChatSDK_armv7_armv7s.a */; };
+		D009107C176453B4005ACF6C /* libUMSocial_Sdk_2.1.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0091070176453B4005ACF6C /* libUMSocial_Sdk_2.1.3.a */; };
+		D009107D176453B4005ACF6C /* libUMSocial_Sdk_Comment_2.1.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D0091071176453B4005ACF6C /* libUMSocial_Sdk_Comment_2.1.3.a */; };
+		D009107E176453B4005ACF6C /* UMSCommentDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091073176453B4005ACF6C /* UMSCommentDetailController.xib */; };
+		D009107F176453B4005ACF6C /* UMSCommentInputController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091074176453B4005ACF6C /* UMSCommentInputController.xib */; };
+		D0091080176453B4005ACF6C /* UMSCommentInputControlleriPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091075176453B4005ACF6C /* UMSCommentInputControlleriPad.xib */; };
+		D0091081176453B4005ACF6C /* UMShareEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091076176453B4005ACF6C /* UMShareEditViewController.xib */; };
+		D0091082176453B4005ACF6C /* UMShareEditViewControlleriPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091077176453B4005ACF6C /* UMShareEditViewControlleriPad.xib */; };
+		D0091083176453B4005ACF6C /* UMSnsAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091078176453B4005ACF6C /* UMSnsAccountViewController.xib */; };
+		D0091084176453B4005ACF6C /* UMSShareListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091079176453B4005ACF6C /* UMSShareListController.xib */; };
+		D0091085176453B4005ACF6C /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D009107A176453B4005ACF6C /* UMSocialSDKResources.bundle */; };
 		D09B929E1761C11500A0D3B6 /* StatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = D09B929D1761C11400A0D3B6 /* StatusView.m */; };
 		D09DAE6E1757443D001E3E39 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D09DAE6D1757443D001E3E39 /* iCarousel.m */; };
+		D0D8705D1761EF4300B689AC /* navigation-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870471761EF4300B689AC /* navigation-bar-bg.png */; };
+		D0D8705E1761EF4300B689AC /* navigation-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870481761EF4300B689AC /* navigation-bar-bg@2x.png */; };
+		D0D8705F1761EF4300B689AC /* shelf-bg-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870491761EF4300B689AC /* shelf-bg-landscape-568h.png */; };
+		D0D870601761EF4300B689AC /* shelf-bg-landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8704A1761EF4300B689AC /* shelf-bg-landscape@2x~ipad.png */; };
+		D0D870611761EF4300B689AC /* shelf-bg-landscape@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8704B1761EF4300B689AC /* shelf-bg-landscape@2x~iphone.png */; };
+		D0D870621761EF4300B689AC /* shelf-bg-landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8704C1761EF4300B689AC /* shelf-bg-landscape~ipad.png */; };
+		D0D870631761EF4300B689AC /* shelf-bg-landscape~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8704D1761EF4300B689AC /* shelf-bg-landscape~iphone.png */; };
+		D0D870641761EF4300B689AC /* shelf-bg-portrait-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8704E1761EF4300B689AC /* shelf-bg-portrait-568h.png */; };
+		D0D870651761EF4300B689AC /* shelf-bg-portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8704F1761EF4300B689AC /* shelf-bg-portrait@2x~ipad.png */; };
+		D0D870661761EF4300B689AC /* shelf-bg-portrait@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870501761EF4300B689AC /* shelf-bg-portrait@2x~iphone.png */; };
+		D0D870671761EF4300B689AC /* shelf-bg-portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870511761EF4300B689AC /* shelf-bg-portrait~ipad.png */; };
+		D0D870681761EF4300B689AC /* shelf-bg-portrait~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870521761EF4300B689AC /* shelf-bg-portrait~iphone.png */; };
+		D0D870691761EF4300B689AC /* shelf-button-read.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870531761EF4300B689AC /* shelf-button-read.png */; };
+		D0D8706A1761EF4300B689AC /* shelf-button-read@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870541761EF4300B689AC /* shelf-button-read@2x.png */; };
+		D0D8706B1761EF4300B689AC /* shelf-button-subscription.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870551761EF4300B689AC /* shelf-button-subscription.png */; };
+		D0D8706C1761EF4300B689AC /* shelf-button-subscription@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870561761EF4300B689AC /* shelf-button-subscription@2x.png */; };
+		D0D8706D1761EF4300B689AC /* shelf_bg_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870571761EF4300B689AC /* shelf_bg_refresh.png */; };
+		D0D8706E1761EF4300B689AC /* shelf_bg_refresh@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870581761EF4300B689AC /* shelf_bg_refresh@2x.png */; };
+		D0D8706F1761EF4300B689AC /* shelf_bg_share.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870591761EF4300B689AC /* shelf_bg_share.png */; };
+		D0D870701761EF4300B689AC /* shelf_bg_share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8705A1761EF4300B689AC /* shelf_bg_share@2x.png */; };
+		D0D870711761EF4300B689AC /* shelf_bg_system.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8705B1761EF4300B689AC /* shelf_bg_system.png */; };
+		D0D870721761EF4300B689AC /* shelf_bg_system@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D8705C1761EF4300B689AC /* shelf_bg_system@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -209,27 +225,55 @@
 		BF3CCC9F15D080560087B9CA /* ios-icon-ipad@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-icon-ipad@2x.png"; sourceTree = "<group>"; };
 		BF3CCCA015D080560087B9CA /* ios-icon-iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-icon-iphone.png"; sourceTree = "<group>"; };
 		BF3CCCA115D080560087B9CA /* ios-icon-iphone@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ios-icon-iphone@2x.png"; sourceTree = "<group>"; };
-		D09B927A17619A4C00A0D3B6 /* navigation-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg.png"; sourceTree = "<group>"; };
-		D09B927B17619A4C00A0D3B6 /* navigation-bar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg@2x.png"; sourceTree = "<group>"; };
-		D09B927C17619A4C00A0D3B6 /* shelf-bg-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape-568h.png"; sourceTree = "<group>"; };
-		D09B927D17619A4C00A0D3B6 /* shelf-bg-landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape@2x~ipad.png"; sourceTree = "<group>"; };
-		D09B927E17619A4C00A0D3B6 /* shelf-bg-landscape@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape@2x~iphone.png"; sourceTree = "<group>"; };
-		D09B927F17619A4C00A0D3B6 /* shelf-bg-landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape~ipad.png"; sourceTree = "<group>"; };
-		D09B928017619A4C00A0D3B6 /* shelf-bg-landscape~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape~iphone.png"; sourceTree = "<group>"; };
-		D09B928117619A4C00A0D3B6 /* shelf-bg-portrait-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait-568h.png"; sourceTree = "<group>"; };
-		D09B928217619A4C00A0D3B6 /* shelf-bg-portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		D09B928317619A4C00A0D3B6 /* shelf-bg-portrait@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait@2x~iphone.png"; sourceTree = "<group>"; };
-		D09B928417619A4C00A0D3B6 /* shelf-bg-portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait~ipad.png"; sourceTree = "<group>"; };
-		D09B928517619A4C00A0D3B6 /* shelf-bg-portrait~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait~iphone.png"; sourceTree = "<group>"; };
-		D09B928617619A4C00A0D3B6 /* shelf_bg_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_bg_refresh.png; sourceTree = "<group>"; };
-		D09B928717619A4C00A0D3B6 /* shelf_bg_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_bg_share.png; sourceTree = "<group>"; };
-		D09B928817619A4C00A0D3B6 /* shelf_bg_system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_bg_system.png; sourceTree = "<group>"; };
-		D09B92981761AA1100A0D3B6 /* shelf-button-read.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-button-read.png"; sourceTree = "<group>"; };
-		D09B92991761AA1100A0D3B6 /* shelf-button-Subscription.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-button-Subscription.png"; sourceTree = "<group>"; };
+		D0091062176453B4005ACF6C /* libWeChatSDK_armv7_armv7s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK_armv7_armv7s.a; sourceTree = "<group>"; };
+		D0091063176453B4005ACF6C /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		D0091064176453B4005ACF6C /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		D0091066176453B4005ACF6C /* UMSocial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocial.h; sourceTree = "<group>"; };
+		D0091067176453B4005ACF6C /* UMSocialAccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialAccountManager.h; sourceTree = "<group>"; };
+		D0091068176453B4005ACF6C /* UMSocialBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialBar.h; sourceTree = "<group>"; };
+		D0091069176453B4005ACF6C /* UMSocialConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialConfig.h; sourceTree = "<group>"; };
+		D009106A176453B4005ACF6C /* UMSocialControllerService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialControllerService.h; sourceTree = "<group>"; };
+		D009106B176453B4005ACF6C /* UMSocialControllerServiceComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialControllerServiceComment.h; sourceTree = "<group>"; };
+		D009106C176453B4005ACF6C /* UMSocialData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialData.h; sourceTree = "<group>"; };
+		D009106D176453B4005ACF6C /* UMSocialDataService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialDataService.h; sourceTree = "<group>"; };
+		D009106E176453B4005ACF6C /* UMSocialSnsPlatformManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSnsPlatformManager.h; sourceTree = "<group>"; };
+		D009106F176453B4005ACF6C /* UMSocialSnsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSnsService.h; sourceTree = "<group>"; };
+		D0091070176453B4005ACF6C /* libUMSocial_Sdk_2.1.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocial_Sdk_2.1.3.a; sourceTree = "<group>"; };
+		D0091071176453B4005ACF6C /* libUMSocial_Sdk_Comment_2.1.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocial_Sdk_Comment_2.1.3.a; sourceTree = "<group>"; };
+		D0091073176453B4005ACF6C /* UMSCommentDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSCommentDetailController.xib; sourceTree = "<group>"; };
+		D0091074176453B4005ACF6C /* UMSCommentInputController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSCommentInputController.xib; sourceTree = "<group>"; };
+		D0091075176453B4005ACF6C /* UMSCommentInputControlleriPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSCommentInputControlleriPad.xib; sourceTree = "<group>"; };
+		D0091076176453B4005ACF6C /* UMShareEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMShareEditViewController.xib; sourceTree = "<group>"; };
+		D0091077176453B4005ACF6C /* UMShareEditViewControlleriPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMShareEditViewControlleriPad.xib; sourceTree = "<group>"; };
+		D0091078176453B4005ACF6C /* UMSnsAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSnsAccountViewController.xib; sourceTree = "<group>"; };
+		D0091079176453B4005ACF6C /* UMSShareListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSShareListController.xib; sourceTree = "<group>"; };
+		D009107A176453B4005ACF6C /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
 		D09B929C1761C11400A0D3B6 /* StatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusView.h; path = BakerShelf/StatusView.h; sourceTree = SOURCE_ROOT; };
 		D09B929D1761C11400A0D3B6 /* StatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusView.m; path = BakerShelf/StatusView.m; sourceTree = SOURCE_ROOT; };
 		D09DAE6C1757443D001E3E39 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D09DAE6D1757443D001E3E39 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		D0D870471761EF4300B689AC /* navigation-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg.png"; sourceTree = "<group>"; };
+		D0D870481761EF4300B689AC /* navigation-bar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg@2x.png"; sourceTree = "<group>"; };
+		D0D870491761EF4300B689AC /* shelf-bg-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape-568h.png"; sourceTree = "<group>"; };
+		D0D8704A1761EF4300B689AC /* shelf-bg-landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape@2x~ipad.png"; sourceTree = "<group>"; };
+		D0D8704B1761EF4300B689AC /* shelf-bg-landscape@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape@2x~iphone.png"; sourceTree = "<group>"; };
+		D0D8704C1761EF4300B689AC /* shelf-bg-landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape~ipad.png"; sourceTree = "<group>"; };
+		D0D8704D1761EF4300B689AC /* shelf-bg-landscape~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape~iphone.png"; sourceTree = "<group>"; };
+		D0D8704E1761EF4300B689AC /* shelf-bg-portrait-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait-568h.png"; sourceTree = "<group>"; };
+		D0D8704F1761EF4300B689AC /* shelf-bg-portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait@2x~ipad.png"; sourceTree = "<group>"; };
+		D0D870501761EF4300B689AC /* shelf-bg-portrait@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait@2x~iphone.png"; sourceTree = "<group>"; };
+		D0D870511761EF4300B689AC /* shelf-bg-portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait~ipad.png"; sourceTree = "<group>"; };
+		D0D870521761EF4300B689AC /* shelf-bg-portrait~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-portrait~iphone.png"; sourceTree = "<group>"; };
+		D0D870531761EF4300B689AC /* shelf-button-read.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-button-read.png"; sourceTree = "<group>"; };
+		D0D870541761EF4300B689AC /* shelf-button-read@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-button-read@2x.png"; sourceTree = "<group>"; };
+		D0D870551761EF4300B689AC /* shelf-button-subscription.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-button-subscription.png"; sourceTree = "<group>"; };
+		D0D870561761EF4300B689AC /* shelf-button-subscription@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-button-subscription@2x.png"; sourceTree = "<group>"; };
+		D0D870571761EF4300B689AC /* shelf_bg_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_bg_refresh.png; sourceTree = "<group>"; };
+		D0D870581761EF4300B689AC /* shelf_bg_refresh@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf_bg_refresh@2x.png"; sourceTree = "<group>"; };
+		D0D870591761EF4300B689AC /* shelf_bg_share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_bg_share.png; sourceTree = "<group>"; };
+		D0D8705A1761EF4300B689AC /* shelf_bg_share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf_bg_share@2x.png"; sourceTree = "<group>"; };
+		D0D8705B1761EF4300B689AC /* shelf_bg_system.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shelf_bg_system.png; sourceTree = "<group>"; };
+		D0D8705C1761EF4300B689AC /* shelf_bg_system@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf_bg_system@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -247,6 +291,9 @@
 				9F55576815B4C6C3003072A3 /* QuartzCore.framework in Frameworks */,
 				AB40048115B4B90200D87E2A /* MessageUI.framework in Frameworks */,
 				AB40048315B4B90A00D87E2A /* libz.dylib in Frameworks */,
+				D009107B176453B4005ACF6C /* libWeChatSDK_armv7_armv7s.a in Frameworks */,
+				D009107C176453B4005ACF6C /* libUMSocial_Sdk_2.1.3.a in Frameworks */,
+				D009107D176453B4005ACF6C /* libUMSocial_Sdk_Comment_2.1.3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,10 +303,11 @@
 		9FF7957E15B4C4F600899E51 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				D009105F176453B4005ACF6C /* UMSocial_Sdk_2.1.3 */,
+				D0D870461761EF4300B689AC /* img */,
 				D09DAE6B1757443D001E3E39 /* iCarousel */,
 				ABD6FC3E16544EAD0032BC44 /* NSData+Base64.h */,
 				ABD6FC3F16544EAD0032BC44 /* NSData+Base64.m */,
-				D09B927917619A4C00A0D3B6 /* img */,
 				9FF7957F15B4C4F600899E51 /* AQGridView */,
 				9F5EB3BB15FCA3A100E13796 /* NSString+Extensions.h */,
 				9F5EB3BC15FCA3A100E13796 /* NSString+Extensions.m */,
@@ -483,30 +531,67 @@
 			path = icon;
 			sourceTree = "<group>";
 		};
-		D09B927917619A4C00A0D3B6 /* img */ = {
+		D009105F176453B4005ACF6C /* UMSocial_Sdk_2.1.3 */ = {
 			isa = PBXGroup;
 			children = (
-				D09B927A17619A4C00A0D3B6 /* navigation-bar-bg.png */,
-				D09B927B17619A4C00A0D3B6 /* navigation-bar-bg@2x.png */,
-				D09B927C17619A4C00A0D3B6 /* shelf-bg-landscape-568h.png */,
-				D09B927D17619A4C00A0D3B6 /* shelf-bg-landscape@2x~ipad.png */,
-				D09B927E17619A4C00A0D3B6 /* shelf-bg-landscape@2x~iphone.png */,
-				D09B927F17619A4C00A0D3B6 /* shelf-bg-landscape~ipad.png */,
-				D09B928017619A4C00A0D3B6 /* shelf-bg-landscape~iphone.png */,
-				D09B928117619A4C00A0D3B6 /* shelf-bg-portrait-568h.png */,
-				D09B928217619A4C00A0D3B6 /* shelf-bg-portrait@2x~ipad.png */,
-				D09B928317619A4C00A0D3B6 /* shelf-bg-portrait@2x~iphone.png */,
-				D09B928417619A4C00A0D3B6 /* shelf-bg-portrait~ipad.png */,
-				D09B928517619A4C00A0D3B6 /* shelf-bg-portrait~iphone.png */,
-				D09B92981761AA1100A0D3B6 /* shelf-button-read.png */,
-				D09B92991761AA1100A0D3B6 /* shelf-button-Subscription.png */,
-				D09B928617619A4C00A0D3B6 /* shelf_bg_refresh.png */,
-				D09B928717619A4C00A0D3B6 /* shelf_bg_share.png */,
-				D09B928817619A4C00A0D3B6 /* shelf_bg_system.png */,
+				D0091060176453B4005ACF6C /* frameworks */,
+				D0091065176453B4005ACF6C /* Header */,
+				D0091070176453B4005ACF6C /* libUMSocial_Sdk_2.1.3.a */,
+				D0091071176453B4005ACF6C /* libUMSocial_Sdk_Comment_2.1.3.a */,
+				D0091072176453B4005ACF6C /* SocialSDKXib */,
+				D009107A176453B4005ACF6C /* UMSocialSDKResources.bundle */,
 			);
-			name = img;
-			path = BakerShelf/img;
-			sourceTree = SOURCE_ROOT;
+			path = UMSocial_Sdk_2.1.3;
+			sourceTree = "<group>";
+		};
+		D0091060176453B4005ACF6C /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D0091061176453B4005ACF6C /* Wechat */,
+			);
+			path = frameworks;
+			sourceTree = "<group>";
+		};
+		D0091061176453B4005ACF6C /* Wechat */ = {
+			isa = PBXGroup;
+			children = (
+				D0091062176453B4005ACF6C /* libWeChatSDK_armv7_armv7s.a */,
+				D0091063176453B4005ACF6C /* WXApi.h */,
+				D0091064176453B4005ACF6C /* WXApiObject.h */,
+			);
+			path = Wechat;
+			sourceTree = "<group>";
+		};
+		D0091065176453B4005ACF6C /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				D0091066176453B4005ACF6C /* UMSocial.h */,
+				D0091067176453B4005ACF6C /* UMSocialAccountManager.h */,
+				D0091068176453B4005ACF6C /* UMSocialBar.h */,
+				D0091069176453B4005ACF6C /* UMSocialConfig.h */,
+				D009106A176453B4005ACF6C /* UMSocialControllerService.h */,
+				D009106B176453B4005ACF6C /* UMSocialControllerServiceComment.h */,
+				D009106C176453B4005ACF6C /* UMSocialData.h */,
+				D009106D176453B4005ACF6C /* UMSocialDataService.h */,
+				D009106E176453B4005ACF6C /* UMSocialSnsPlatformManager.h */,
+				D009106F176453B4005ACF6C /* UMSocialSnsService.h */,
+			);
+			path = Header;
+			sourceTree = "<group>";
+		};
+		D0091072176453B4005ACF6C /* SocialSDKXib */ = {
+			isa = PBXGroup;
+			children = (
+				D0091073176453B4005ACF6C /* UMSCommentDetailController.xib */,
+				D0091074176453B4005ACF6C /* UMSCommentInputController.xib */,
+				D0091075176453B4005ACF6C /* UMSCommentInputControlleriPad.xib */,
+				D0091076176453B4005ACF6C /* UMShareEditViewController.xib */,
+				D0091077176453B4005ACF6C /* UMShareEditViewControlleriPad.xib */,
+				D0091078176453B4005ACF6C /* UMSnsAccountViewController.xib */,
+				D0091079176453B4005ACF6C /* UMSShareListController.xib */,
+			);
+			path = SocialSDKXib;
+			sourceTree = "<group>";
 		};
 		D09DAE6B1757443D001E3E39 /* iCarousel */ = {
 			isa = PBXGroup;
@@ -516,6 +601,36 @@
 			);
 			path = iCarousel;
 			sourceTree = "<group>";
+		};
+		D0D870461761EF4300B689AC /* img */ = {
+			isa = PBXGroup;
+			children = (
+				D0D870471761EF4300B689AC /* navigation-bar-bg.png */,
+				D0D870481761EF4300B689AC /* navigation-bar-bg@2x.png */,
+				D0D870491761EF4300B689AC /* shelf-bg-landscape-568h.png */,
+				D0D8704A1761EF4300B689AC /* shelf-bg-landscape@2x~ipad.png */,
+				D0D8704B1761EF4300B689AC /* shelf-bg-landscape@2x~iphone.png */,
+				D0D8704C1761EF4300B689AC /* shelf-bg-landscape~ipad.png */,
+				D0D8704D1761EF4300B689AC /* shelf-bg-landscape~iphone.png */,
+				D0D8704E1761EF4300B689AC /* shelf-bg-portrait-568h.png */,
+				D0D8704F1761EF4300B689AC /* shelf-bg-portrait@2x~ipad.png */,
+				D0D870501761EF4300B689AC /* shelf-bg-portrait@2x~iphone.png */,
+				D0D870511761EF4300B689AC /* shelf-bg-portrait~ipad.png */,
+				D0D870521761EF4300B689AC /* shelf-bg-portrait~iphone.png */,
+				D0D870531761EF4300B689AC /* shelf-button-read.png */,
+				D0D870541761EF4300B689AC /* shelf-button-read@2x.png */,
+				D0D870551761EF4300B689AC /* shelf-button-subscription.png */,
+				D0D870561761EF4300B689AC /* shelf-button-subscription@2x.png */,
+				D0D870571761EF4300B689AC /* shelf_bg_refresh.png */,
+				D0D870581761EF4300B689AC /* shelf_bg_refresh@2x.png */,
+				D0D870591761EF4300B689AC /* shelf_bg_share.png */,
+				D0D8705A1761EF4300B689AC /* shelf_bg_share@2x.png */,
+				D0D8705B1761EF4300B689AC /* shelf_bg_system.png */,
+				D0D8705C1761EF4300B689AC /* shelf_bg_system@2x.png */,
+			);
+			name = img;
+			path = BakerShelf/img;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
@@ -578,23 +693,36 @@
 				BF3CCCA515D080560087B9CA /* ios-icon-iphone@2x.png in Resources */,
 				AB5CEB5A161E4081008B4943 /* Default-568h@2x.png in Resources */,
 				20CC551D16AD346900DEFB5C /* Localizable.strings in Resources */,
-				D09B928917619A4C00A0D3B6 /* navigation-bar-bg.png in Resources */,
-				D09B928A17619A4C00A0D3B6 /* navigation-bar-bg@2x.png in Resources */,
-				D09B928B17619A4C00A0D3B6 /* shelf-bg-landscape-568h.png in Resources */,
-				D09B928C17619A4C00A0D3B6 /* shelf-bg-landscape@2x~ipad.png in Resources */,
-				D09B928D17619A4C00A0D3B6 /* shelf-bg-landscape@2x~iphone.png in Resources */,
-				D09B928E17619A4C00A0D3B6 /* shelf-bg-landscape~ipad.png in Resources */,
-				D09B928F17619A4C00A0D3B6 /* shelf-bg-landscape~iphone.png in Resources */,
-				D09B929017619A4C00A0D3B6 /* shelf-bg-portrait-568h.png in Resources */,
-				D09B929117619A4C00A0D3B6 /* shelf-bg-portrait@2x~ipad.png in Resources */,
-				D09B929217619A4C00A0D3B6 /* shelf-bg-portrait@2x~iphone.png in Resources */,
-				D09B929317619A4C00A0D3B6 /* shelf-bg-portrait~ipad.png in Resources */,
-				D09B929417619A4C00A0D3B6 /* shelf-bg-portrait~iphone.png in Resources */,
-				D09B929517619A4C00A0D3B6 /* shelf_bg_refresh.png in Resources */,
-				D09B929617619A4C00A0D3B6 /* shelf_bg_share.png in Resources */,
-				D09B929717619A4C00A0D3B6 /* shelf_bg_system.png in Resources */,
-				D09B929A1761AA1100A0D3B6 /* shelf-button-read.png in Resources */,
-				D09B929B1761AA1100A0D3B6 /* shelf-button-Subscription.png in Resources */,
+				D0D8705D1761EF4300B689AC /* navigation-bar-bg.png in Resources */,
+				D0D8705E1761EF4300B689AC /* navigation-bar-bg@2x.png in Resources */,
+				D0D8705F1761EF4300B689AC /* shelf-bg-landscape-568h.png in Resources */,
+				D0D870601761EF4300B689AC /* shelf-bg-landscape@2x~ipad.png in Resources */,
+				D0D870611761EF4300B689AC /* shelf-bg-landscape@2x~iphone.png in Resources */,
+				D0D870621761EF4300B689AC /* shelf-bg-landscape~ipad.png in Resources */,
+				D0D870631761EF4300B689AC /* shelf-bg-landscape~iphone.png in Resources */,
+				D0D870641761EF4300B689AC /* shelf-bg-portrait-568h.png in Resources */,
+				D0D870651761EF4300B689AC /* shelf-bg-portrait@2x~ipad.png in Resources */,
+				D0D870661761EF4300B689AC /* shelf-bg-portrait@2x~iphone.png in Resources */,
+				D0D870671761EF4300B689AC /* shelf-bg-portrait~ipad.png in Resources */,
+				D0D870681761EF4300B689AC /* shelf-bg-portrait~iphone.png in Resources */,
+				D0D870691761EF4300B689AC /* shelf-button-read.png in Resources */,
+				D0D8706A1761EF4300B689AC /* shelf-button-read@2x.png in Resources */,
+				D0D8706B1761EF4300B689AC /* shelf-button-subscription.png in Resources */,
+				D0D8706C1761EF4300B689AC /* shelf-button-subscription@2x.png in Resources */,
+				D0D8706D1761EF4300B689AC /* shelf_bg_refresh.png in Resources */,
+				D0D8706E1761EF4300B689AC /* shelf_bg_refresh@2x.png in Resources */,
+				D0D8706F1761EF4300B689AC /* shelf_bg_share.png in Resources */,
+				D0D870701761EF4300B689AC /* shelf_bg_share@2x.png in Resources */,
+				D0D870711761EF4300B689AC /* shelf_bg_system.png in Resources */,
+				D0D870721761EF4300B689AC /* shelf_bg_system@2x.png in Resources */,
+				D009107E176453B4005ACF6C /* UMSCommentDetailController.xib in Resources */,
+				D009107F176453B4005ACF6C /* UMSCommentInputController.xib in Resources */,
+				D0091080176453B4005ACF6C /* UMSCommentInputControlleriPad.xib in Resources */,
+				D0091081176453B4005ACF6C /* UMShareEditViewController.xib in Resources */,
+				D0091082176453B4005ACF6C /* UMShareEditViewControlleriPad.xib in Resources */,
+				D0091083176453B4005ACF6C /* UMSnsAccountViewController.xib in Resources */,
+				D0091084176453B4005ACF6C /* UMSShareListController.xib in Resources */,
+				D0091085176453B4005ACF6C /* UMSocialSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,6 +855,11 @@
 				GCC_PREFIX_HEADER = "Baker/Baker-Prefix.pch";
 				INFOPLIST_FILE = "Baker/Baker-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/BakerShelf/lib/UMSocial_Sdk_2.1.3/frameworks/Wechat\"",
+					"\"$(SRCROOT)/BakerShelf/lib/UMSocial_Sdk_2.1.3\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;
@@ -740,6 +873,11 @@
 				GCC_PREFIX_HEADER = "Baker/Baker-Prefix.pch";
 				INFOPLIST_FILE = "Baker/Baker-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/BakerShelf/lib/UMSocial_Sdk_2.1.3/frameworks/Wechat\"",
+					"\"$(SRCROOT)/BakerShelf/lib/UMSocial_Sdk_2.1.3\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 2;
 				WRAPPER_EXTENSION = app;

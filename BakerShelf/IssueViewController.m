@@ -103,7 +103,7 @@
 
     CGSize cellSize = [IssueViewController getIssueCellSize];
 
-    self.view.frame = CGRectMake(0, 0, cellSize.width, cellSize.height);
+    self.view.frame = CGRectMake(0, 0, 403, 600);
     
     
 
@@ -113,29 +113,27 @@
     UI ui = [IssueViewController getIssueContentMeasures];
 
     self.issueCover = [UIButton buttonWithType:UIButtonTypeCustom];
-    issueCover.frame = CGRectMake(ui.cellPadding, ui.cellPadding, cellSize.width-20, cellSize.height-30);
+    issueCover.frame = CGRectMake(0, 0,403, 514);
+
 
     issueCover.backgroundColor = [UIColor colorWithHexString:ISSUES_COVER_BACKGROUND_COLOR];
     issueCover.adjustsImageWhenHighlighted = NO;
     issueCover.adjustsImageWhenDisabled = NO;
 
     issueCover.layer.shadowOpacity = 0.5;
-    issueCover.layer.shadowOffset = CGSizeMake(0, 2);
+    issueCover.layer.shadowOffset = CGSizeMake(5, 15);
     issueCover.layer.shouldRasterize = YES;
     issueCover.layer.rasterizationScale = [UIScreen mainScreen].scale;
     
-//    [issueCover addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:issueCover];
 
     // SETUP USED FONTS
     self.titleFont = [UIFont fontWithName:ISSUES_TITLE_FONT size:ISSUES_TITLE_FONT_SIZE];
     self.infoFont = [UIFont fontWithName:ISSUES_INFO_FONT size:ISSUES_INFO_FONT_SIZE];
-//    UIFont *actionFont = [UIFont fontWithName:ISSUES_ACTION_BUTTON_FONT size:ISSUES_ACTION_BUTTON_FONT_SIZE];
-//    UIFont *archiveFont = [UIFont fontWithName:ISSUES_ARCHIVE_BUTTON_FONT size:ISSUES_ARCHIVE_BUTTON_FONT_SIZE];
 
     // SETUP TITLE LABEL
     self.titleLabel = [[[UILabel alloc] init] autorelease];
-    titleLabel.textColor = [UIColor colorWithHexString:ISSUES_TITLE_COLOR];
+    titleLabel.textColor = [UIColor whiteColor];
     titleLabel.backgroundColor = [UIColor clearColor];
     titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
     titleLabel.textAlignment = UITextAlignmentLeft;
@@ -149,73 +147,27 @@
 
     // SETUP PRICE LABEL
     self.priceLabel = [[[UILabel alloc] init] autorelease];
-    priceLabel.textColor = [UIColor colorWithHexString:ISSUES_PRICE_COLOR];
+    priceLabel.textColor = [UIColor whiteColor];
     priceLabel.backgroundColor = [UIColor clearColor];
     priceLabel.lineBreakMode = UILineBreakModeTailTruncation;
     priceLabel.textAlignment = UITextAlignmentLeft;
-    priceLabel.font = titleFont;
+    priceLabel.font = infoFont;
 
     [self.view addSubview:priceLabel];
     
 #ifdef BAKER_NEWSSTAND
+    
     self.longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(actionLongPress:)];
     longPress.numberOfTouchesRequired = 1;
     [self.issueCover addGestureRecognizer:longPress];
     
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionButtonPressed:)];
     tap.numberOfTouchesRequired = 1;
-    [self.issueCover addGestureRecognizer:tap];
+    [self.view addGestureRecognizer:tap];
+    
 #endif
-    
-    
-    
-    // SETUP ACTION BUTTON
-//    self.actionButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    actionButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ACTION_BUTTON_BACKGROUND_COLOR];
-//    actionButton.titleLabel.font = actionFont;
-//
-//    [actionButton setTitle:NSLocalizedString(@"ACTION_DOWNLOADED_TEXT", nil) forState:UIControlStateNormal];
-//    [actionButton setTitleColor:[UIColor colorWithHexString:ISSUES_ACTION_BUTTON_COLOR] forState:UIControlStateNormal];
-//    [actionButton addTarget:self action:@selector(actionButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//
-//    [self.view addSubview:actionButton];
-
-    // SETUP ARCHIVE BUTTON
-//    self.archiveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-//    archiveButton.backgroundColor = [UIColor colorWithHexString:ISSUES_ARCHIVE_BUTTON_BACKGROUND_COLOR];
-//    archiveButton.titleLabel.font = archiveFont;
-//
-//    [archiveButton setTitle:NSLocalizedString(@"ARCHIVE_TEXT", nil) forState:UIControlStateNormal];
-//    [archiveButton setTitleColor:[UIColor colorWithHexString:ISSUES_ARCHIVE_BUTTON_COLOR] forState:UIControlStateNormal];
-//    [archiveButton addTarget:self action:@selector(archiveButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-//
-//    #ifdef BAKER_NEWSSTAND
-//    [self.view addSubview:archiveButton];
-//    #endif
-
-    // SETUP DOWN/LOADING SPINNER AND LABEL
-//    self.spinner = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] autorelease];
-//    spinner.color = [UIColor colorWithHexString:ISSUES_LOADING_SPINNER_COLOR];
-//    spinner.backgroundColor = [UIColor clearColor];
-//    spinner.hidesWhenStopped = YES;
-//
-//    self.loadingLabel = [[[UILabel alloc] init] autorelease];
-//    loadingLabel.textColor = [UIColor colorWithHexString:ISSUES_LOADING_LABEL_COLOR];
-//    loadingLabel.backgroundColor = [UIColor clearColor];
-//    loadingLabel.textAlignment = UITextAlignmentLeft;
-//    loadingLabel.text = NSLocalizedString(@"DOWNLOADING_TEXT", nil);
-//    loadingLabel.font = actionFont;
-//
-//    [self.view addSubview:spinner];
-//    [self.view addSubview:loadingLabel];
-
-    // SETUP PROGRESS BAR
-//    self.progressBar = [[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault] autorelease];
-//    self.progressBar.progressTintColor = [UIColor colorWithHexString:ISSUES_PROGRESSBAR_TINT_COLOR];
-//
-//    [self.view addSubview:progressBar];
-    
-    self.statusview = [[StatusView alloc]initWithFrame:CGRectMake(cellSize.width-120, cellSize.height-10, 105, 36)];
+     
+    self.statusview = [[StatusView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-36, 105, 36)];
     [self.statusview setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:self.statusview];
 
@@ -243,35 +195,21 @@
     }];
 
     // SETUP TITLE LABEL
-    CGSize titleSize = [self.issue.title sizeWithFont:titleFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize titleSize = [self.issue.title sizeWithFont:titleFont constrainedToSize:CGSizeMake(300, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
     uint titleLines = MIN(4, titleSize.height / textLineheight);
-
-    CGSize cellSize = [IssueViewController getIssueCellSize];
+//    CGSize cellSize = [IssueViewController getIssueCellSize];
+//    titleLabel.frame = CGRectMake(0, self.issueCover.frame.size.height +10, 300, textLineheight * titleLines);
     
-    titleLabel.frame = CGRectMake(0, cellSize.height-20, 170, textLineheight * titleLines);
+    titleLabel.frame = CGRectMake(0, self.issueCover.frame.size.height +20, 300, 40);
     titleLabel.numberOfLines = titleLines;
     titleLabel.text = self.issue.title;
-
-     NSLog(@"赵静 self.issue.info =%@",self.issue.title);
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
     
-    tapReadButton.frame = CGRectMake(cellSize.width-120, cellSize.height-10, 105, 36);
+    // TapButton Frame
+    tapReadButton.frame = CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-36, 105, 36);
 
-    // SETUP INFO LABEL
-//    CGSize infoSize = [self.issue.info sizeWithFont:infoFont constrainedToSize:CGSizeMake(170, MAXFLOAT) lineBreakMode:UILineBreakModeWordWrap];
-//    uint infoLines = MIN(4, infoSize.height / textLineheight);
-
-//    infoLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight * infoLines);
-//    infoLabel.numberOfLines = infoLines;
-//    infoLabel.text = self.issue.info;
-//    
-//    NSLog(@"赵静 self.issue.info =%@",self.issue.info);
-
-//    heightOffset = heightOffset + infoLabel.frame.size.height + 5;
-
-    // SETUP PRICE LABEL
-//    self.priceLabel.frame = CGRectMake(ui.contentOffset, heightOffset, 170, textLineheight);
-    self.priceLabel.frame = CGRectMake(0, cellSize.height-10, 170, textLineheight);
+    // SETUP PRICE LABEL);
+    self.priceLabel.frame = CGRectMake(0, self.view.frame.size.height-30 , 170, 30);
 
     heightOffset = heightOffset + priceLabel.frame.size.height + 10;
 
@@ -322,7 +260,7 @@
         self.loadingLabel.hidden = YES;
         self.priceLabel.hidden = NO;
         
-        self.statusview.hidden = YES;
+        self.statusview.hidden = NO;
         self.tapReadButton.hidden = NO;
         [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }

@@ -33,6 +33,7 @@
 
 #import "InterceptorWindow.h"
 #import "ShelfViewController.h"
+#import "UMSocial.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

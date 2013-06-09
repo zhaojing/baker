@@ -29,6 +29,11 @@
 //  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 //
 
+#define UMShareContent   @"有道杂志"
+#define UMShareImageUrl  @"http://ent.appmars.com/prss/part3.png"
+#define UMShareHylink    @"http://www.xayoudao.com/qujianglvyou/"
+
+
 #import "ShelfViewController.h"
 #import "UICustomNavigationBar.h"
 #import "Constants.h"
@@ -40,10 +45,21 @@
 #import "NSString+Extensions.h"
 #import "Utils.h"
 
-@interface ShelfViewController ()
+#import "UMSocialControllerService.h"
+//#import "UMSocialConfigDelegate.h"
+#import "UMSocialData.h"
+#import "UMSocialConfig.h"
+#import "UMSocialSnsPlatformManager.h"
+#import "WXApi.h"
+
+@interface ShelfViewController ()<UIActionSheetDelegate>
 
 @property (strong, nonatomic)UIButton *shareButton;
 @property (strong, nonatomic)UIButton *sysTemButton;
+
+@property (strong, nonatomic) NSArray *arrayPlatForm;
+@property (strong, nonatomic) NSMutableArray *arrayPlayName;
+@property (strong, nonatomic) UIActionSheet * editActionSheet;
 
 @end
 
@@ -60,6 +76,9 @@
 @synthesize bookToBeProcessed;
 @synthesize shareButton;
 @synthesize sysTemButton;
+@synthesize arrayPlatForm;
+@synthesize arrayPlayName;
+@synthesize editActionSheet;
 
 #pragma mark - Init
 
@@ -154,6 +173,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // 分享的内容
+    UMSocialData *socialData = [UMSocialData defaultData];
+    socialData.shareText = UMShareContent ;
+    UMSocialUrlResource *urlresource = [[UMSocialUrlResource alloc] initWithSnsResourceType:UMSocialUrlResourceTypeImage
+                                                                                        url:UMShareImageUrl];
+    socialData.urlResource = urlresource;
+    
+    
+    //分享的弹出界面
+    self.arrayPlatForm = [NSArray arrayWithObjects:UMShareToSina,UMShareToTencent,UMShareToQzone,UMShareToEmail,UMShareToSms, nil];
+    self.arrayPlayName = [NSMutableArray arrayWithObjects:@"微信好友",@"微信朋友圈", nil];
+    for (NSString *snsName in self.arrayPlatForm)
+    {
+        UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:snsName];
+        [self.arrayPlayName addObject:snsPlatform.displayName];
+    }
+    self.editActionSheet = [[UIActionSheet alloc] initWithTitle:@"分享" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+       for (NSString *snsName in self.arrayPlayName)
+    {
+        [self.editActionSheet addButtonWithTitle:snsName];
+     }
+    [self.editActionSheet addButtonWithTitle:@"取消"];
+     self.editActionSheet.cancelButtonIndex = self.editActionSheet.numberOfButtons - 1;
+     self.editActionSheet.delegate = self;
 
     self.navigationItem.title = NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil);
 
@@ -191,17 +235,17 @@
 //                                      autorelease];
     
     self.refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.refreshButton setBackgroundImage:[UIImage imageNamed:@"shelf_bg_refresh.png"] forState:UIControlStateNormal];
+    [self.refreshButton setImage:[UIImage imageNamed:@"shelf_bg_refresh.png"] forState:UIControlStateNormal];
     [self.refreshButton addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.refreshButton];
     
     self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.shareButton setBackgroundImage:[UIImage imageNamed:@"shelf_bg_share.png"] forState:UIControlStateNormal];
+    [self.shareButton setImage:[UIImage imageNamed:@"shelf_bg_share.png"] forState:UIControlStateNormal];
     [self.shareButton addTarget:self action:@selector(handleShare:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.shareButton];
     
     self.sysTemButton= [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.sysTemButton setBackgroundImage:[UIImage imageNamed:@"shelf_bg_system.png"] forState:UIControlStateNormal];
+    [self.sysTemButton setImage:[UIImage imageNamed:@"shelf_bg_system.png"] forState:UIControlStateNormal];
     [self.sysTemButton addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.sysTemButton];
      
@@ -299,11 +343,11 @@
         image = [NSString stringWithFormat:@"%@.png", image];
     }
 
-    int bannerHeight = [ShelfViewController getBannerHeight];
-    self.carousel.frame = CGRectMake(0, 50, width, height - bannerHeight + 50);
-    self.refreshButton.frame = CGRectMake(44, 16, 30, 30);
-    self.shareButton.frame = CGRectMake(size.height - 100, 16, 30, 30);
-    self.sysTemButton.frame = CGRectMake(size.height-50, 16, 30, 30);
+//    int bannerHeight = [ShelfViewController getBannerHeight];
+    self.carousel.frame = CGRectMake(0, 117, width, 600);
+    self.refreshButton.frame = CGRectMake(44, 10, 60, 60);
+    self.shareButton.frame = CGRectMake(size.height - 128, 10, 60, 60);
+    self.sysTemButton.frame = CGRectMake(size.height-74, 10, 60, 60);
     
 
     self.background.frame = CGRectMake(0, 0, width, height);
@@ -400,6 +444,10 @@
 
 #pragma mark iCarouselDelegate
 
+-(void)handleShare:(id)sender
+{
+    [self.editActionSheet showInView:self.view];
+}
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
 {
@@ -531,6 +579,94 @@
             }
         }
     }
+    else if (actionSheet == self.editActionSheet)
+    {
+    
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
+   UMSocialControllerService *  socialControllerService = [UMSocialControllerService defaultControllerService];
+    
+    if(buttonIndex == 0|| buttonIndex == 1)
+    {
+        if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi])
+        {
+            if (socialControllerService.currentNavigationController != nil) {
+                [socialControllerService performSelector:@selector(close)];
+            }
+            
+            SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+            
+            WXMediaMessage *message = [WXMediaMessage message];
+            
+            //分享的是图片
+            if (socialControllerService.socialData.urlResource)
+            {
+                UMSocialUrlResource *urlresource = socialControllerService.socialData.urlResource;
+                
+                NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlresource.url]];
+                
+                message.thumbData = dataImage;
+            }
+            
+            //分享的文字
+            if (socialControllerService.socialData.shareText)
+            {
+                message.description = socialControllerService.socialData.shareText;
+            }
+            
+            //分享url
+            if (UMShareHylink)
+            {
+                WXWebpageObject *ext = [WXWebpageObject object];
+                
+                ext.webpageUrl = UMShareHylink;
+                
+                message.mediaObject = ext;
+            }
+            
+            NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+            
+            NSString *strTitle = [infoDict objectForKey:@"CFBundleDisplayName"];
+            
+            message.title = [NSString stringWithFormat:@"来自于[%@]应用",strTitle];
+            
+            req.message = message;
+            
+            req.bText = NO;
+            
+            
+            if (buttonIndex == 0) {
+                
+                req.scene = WXSceneSession;
+                
+                //                _socialControllerService = [UMSocialControllerService defaultControllerService];
+                
+                [ socialControllerService.socialDataService postSNSWithTypes:[NSArray arrayWithObject:UMShareToWechatSession] content:req.text image:nil location:nil urlResource:nil completion:nil];
+            }
+            if (buttonIndex == 1) {
+                //                _socialControllerService = [UMSocialControllerService defaultControllerService];
+                req.scene = WXSceneTimeline;
+                [socialControllerService.socialDataService postSNSWithTypes:[NSArray arrayWithObject:UMShareToWechatTimeline] content:req.text image:nil location:nil urlResource:nil completion:nil];
+            }
+            [WXApi sendReq:req];
+            
+        }
+        else{
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"好" otherButtonTitles: nil];
+            [alertView show];
+        }
+    }
+    else
+    {
+        NSString *snsName = [self.arrayPlatForm objectAtIndex:buttonIndex-2];
+        
+        UMSocialSnsPlatform *snsPlatForm = [UMSocialSnsPlatformManager getSocialPlatformWithName:snsName];
+        
+        snsPlatForm.snsClickHandler(self,socialControllerService,YES);
+        
+    }
+}
 }
 
 - (void)handleRestoreFailed:(NSNotification *)notification {
@@ -756,5 +892,6 @@
         return 104;
     }
 }
+
 
 @end

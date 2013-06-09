@@ -30,7 +30,7 @@
 //
 
 #import "Constants.h"
-
+#import "WXApi.h"
 #import "AppDelegate.h"
 #import "UICustomNavigationController.h"
 #import "UICustomNavigationBar.h"
@@ -64,7 +64,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    
 
+    [UMSocialData setAppKey:@"508a19a35270155ced00005f"];
+    [WXApi registerApp: @"wx79474d05acb6a73b"];
+    
     #ifdef BAKER_NEWSSTAND
 
     NSLog(@"====== Baker Newsstand Mode enabled ======");
@@ -198,7 +203,8 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-
+  
+    [UMSocialSnsService  applicationDidBecomeActive];
     #ifdef BAKER_NEWSSTAND
     // Opening the application means all new items can be considered as "seen".
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
@@ -208,6 +214,24 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation
+{
+    NSString *urlStr = [url absoluteString];
+    
+    if ([urlStr hasPrefix:@"sina"])
+    {
+        return  [UMSocialSnsService handleOpenURL:url wxApiDelegate:nil];
+    }
+    else
+    {
+        return NO;
+    }
+    
 }
 
 @end

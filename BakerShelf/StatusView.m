@@ -49,9 +49,9 @@
         
         // proLabel
     
-        _proLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 10, 70, 20)];
-        _proLabel.font = [UIFont fontWithName:@"Arial" size:20];
-        _proLabel.textAlignment = NSTextAlignmentCenter;
+        _proLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 105, 36)];
+        _proLabel.font = [UIFont fontWithName:@"Arial Hebrew" size:30];
+        _proLabel.textAlignment = NSTextAlignmentRight;
         _proLabel.textColor = [UIColor whiteColor];
         _proLabel.hidden = NO;
         _proLabel.backgroundColor = [UIColor clearColor];

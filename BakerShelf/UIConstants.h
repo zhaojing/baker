@@ -37,13 +37,13 @@
     #define ISSUES_COVER_BACKGROUND_COLOR @"#ffffff"
 
     // Title for issues in the shelf
-    #define ISSUES_TITLE_FONT @"Helvetica"
-    #define ISSUES_TITLE_FONT_SIZE 15
+    #define ISSUES_TITLE_FONT @"Arial Rounded MT Bold"
+    #define ISSUES_TITLE_FONT_SIZE 25
     #define ISSUES_TITLE_COLOR @"#000000"
 
     // Info text for issues in the shelf
-    #define ISSUES_INFO_FONT @"Helvetica"
-    #define ISSUES_INFO_FONT_SIZE 15
+    #define ISSUES_INFO_FONT @"Arial Hebrew"
+    #define ISSUES_INFO_FONT_SIZE 20
     #define ISSUES_INFO_COLOR @"#929292"
 
     #define ISSUES_PRICE_COLOR @"#b72529"

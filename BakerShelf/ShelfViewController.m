@@ -358,12 +358,12 @@
     
     //    int bannerHeight = [ShelfViewController getBannerHeight];
     self.carousel.frame = CGRectMake(0, 117, width, 600);
-    self.refreshButton.frame = CGRectMake(44, 10, 60, 60);
+    self.refreshButton.frame = CGRectMake(24, 10, 60, 60);
     self.shareButton.frame = CGRectMake(size.height - 128, 10, 60, 60);
-    self.sysTemButton.frame = CGRectMake(size.height-74, 10, 60, 60);
+    self.sysTemButton.frame = CGRectMake(size.height-64, 10, 60, 60);
     
     
-    self.background.frame = CGRectMake(0, 0, width, height);
+    self.background.frame = CGRectMake(0, 0, width, 748);
     self.background.image = [UIImage imageNamed:image];
     
     //    self.gridView.frame = CGRectMake(0, bannerHeight, width, height - bannerHeight);

@@ -38,7 +38,7 @@
 
     // Title for issues in the shelf
     #define ISSUES_TITLE_FONT @"Arial Rounded MT Bold"
-    #define ISSUES_TITLE_FONT_SIZE 25
+    #define ISSUES_TITLE_FONT_SIZE 23
     #define ISSUES_TITLE_COLOR @"#000000"
 
     // Info text for issues in the shelf

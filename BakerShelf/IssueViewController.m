@@ -125,6 +125,7 @@
     // SETUP USED FONTS
     self.titleFont = [UIFont fontWithName:ISSUES_TITLE_FONT size:ISSUES_TITLE_FONT_SIZE];
     self.infoFont = [UIFont fontWithName:ISSUES_INFO_FONT size:ISSUES_INFO_FONT_SIZE];
+    self.infoFont = [UIFont systemFontOfSize:16];
 
     // SETUP TITLE LABEL
     self.titleLabel = [[[UILabel alloc] init] autorelease];
@@ -202,7 +203,7 @@
 //    CGSize cellSize = [IssueViewController getIssueCellSize];
 //    titleLabel.frame = CGRectMake(0, self.issueCover.frame.size.height +10, 300, textLineheight * titleLines);
     
-    titleLabel.frame = CGRectMake(0, self.issueCover.frame.size.height +20, 300, 40);
+    titleLabel.frame = CGRectMake(0, self.issueCover.frame.size.height +10, 300, 40);
     titleLabel.numberOfLines = titleLines;
     titleLabel.text = self.issue.title;
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
@@ -264,7 +265,7 @@
         
         self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"connecting"])
     {
@@ -281,7 +282,7 @@
      
         self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+            [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"downloading"])
     {
@@ -362,7 +363,7 @@
         
         self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+           [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"purchasing"])
     {
@@ -379,7 +380,7 @@
         
         self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+          [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-subscription.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"purchased"])
     {
@@ -413,10 +414,12 @@
 
         self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+       [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-subscription.png"] forState:UIControlStateNormal];
     }
 
     [self refreshContentWithCache:YES];
+
+    
 
     self.currentStatus = status;
 }
@@ -579,6 +582,12 @@
     }
 //    [self.progressBar setProgress:(bytesWritten / bytesExpected) animated:YES];
     [self.statusview setPro:(bytesWritten / bytesExpected)];
+    if (bytesWritten / bytesExpected == 1.0 )
+    {
+        self.statusview.hidden= YES;
+        self.tapReadButton.hidden = NO;
+        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-read.png"] forState:UIControlStateNormal];
+    }
 }
 - (void)handleDownloadFinished:(NSNotification *)notification {
     self.issue.transientStatus = BakerIssueTransientStatusNone;

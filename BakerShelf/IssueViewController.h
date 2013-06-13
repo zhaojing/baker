@@ -51,6 +51,7 @@
 @property (strong, nonatomic) UIActivityIndicatorView *spinner;
 @property (strong, nonatomic) UILabel *loadingLabel;
 @property (strong, nonatomic) UILabel *priceLabel;
+@property (strong, nonatomic) UILabel *InfoLabel;
 @property (strong, nonatomic) UIButton *tapReadButton;
 @property (strong, nonatomic) UIButton *issueCover;
 @property (strong, nonatomic) UIFont *titleFont;

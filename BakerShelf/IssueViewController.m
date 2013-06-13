@@ -134,15 +134,23 @@
     titleLabel.lineBreakMode = UILineBreakModeTailTruncation;
     titleLabel.textAlignment = UITextAlignmentLeft;
     titleLabel.font = titleFont;
-
     [self.view addSubview:titleLabel];
-      
+    
+    infoLabel = [[[UILabel alloc] init]autorelease];
+    infoLabel.textColor = [UIColor redColor];
+    infoLabel.backgroundColor = [UIColor clearColor];
+    infoLabel.lineBreakMode = UILineBreakModeTailTruncation;
+    infoLabel.textAlignment = UITextAlignmentLeft;
+    infoLabel.font = titleFont;
+    [self.view addSubview:infoLabel];
+    
+
     tapReadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:tapReadButton];
  
     // SETUP PRICE LABEL
     self.priceLabel = [[[UILabel alloc] init] autorelease];
-    priceLabel.textColor = [UIColor whiteColor];
+    priceLabel.textColor = [UIColor colorWithRed:48.0/255.0 green:48.0/255.0 blue:48.0/255.0 alpha:1.0];
     priceLabel.backgroundColor = [UIColor clearColor];
     priceLabel.lineBreakMode = UILineBreakModeTailTruncation;
     priceLabel.textAlignment = UITextAlignmentLeft;
@@ -209,10 +217,14 @@
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
     
     // TapButton Frame
-    tapReadButton.frame = CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-46, 105, 36);
+    tapReadButton.frame = CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-26, 105, 36);
 
     // SETUP PRICE LABEL);
-    self.priceLabel.frame = CGRectMake(0, self.view.frame.size.height-40 , 170, 30);
+    self.priceLabel.frame = CGRectMake(0, self.view.frame.size.height-20 , 170, 30);
+    
+    infoLabel.frame = CGRectMake(0, self.view.frame.size.height -55, 100, 50);
+    infoLabel.text =  self.issue.info;
+    
 
     heightOffset = heightOffset + priceLabel.frame.size.height + 10;
 

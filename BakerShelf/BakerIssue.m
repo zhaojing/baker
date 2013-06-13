@@ -82,6 +82,7 @@
         self.transientStatus = BakerIssueTransientStatusNone;
 
         [self setNotificationDownloadNames];
+    
     }
     return self;
 }

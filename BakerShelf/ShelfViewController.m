@@ -32,11 +32,15 @@
 #define UMShareContent   @"有道杂志"
 #define UMShareImageUrl  @"http://ent.appmars.com/prss/part3.png"
 #define UMShareHylink    @"http://www.xayoudao.com/qujianglvyou/"
+#define CustomActivity_IndicatorViewFrame  CGRectMake(462, 334, 100, 100)
+#define CustomActivity_ActivityIndicatorFrame CGRectMake(31, 32, 37, 37)
+
 
 
 #import "ShelfViewController.h"
 #import "UICustomNavigationBar.h"
 #import "Constants.h"
+#import "WebViewController.h"
 
 #import "BakerViewController.h"
 #import "IssueViewController.h"
@@ -51,8 +55,10 @@
 #import "UMSocialConfig.h"
 #import "UMSocialSnsPlatformManager.h"
 #import "WXApi.h"
+#import "SetUpViewController.h"
 
-@interface ShelfViewController ()<UIActionSheetDelegate>
+
+@interface ShelfViewController ()<UIActionSheetDelegate,SetupDelegate>
 
 @property (strong, nonatomic)UIButton *shareButton;
 @property (strong, nonatomic)UIButton *sysTemButton;
@@ -60,6 +66,10 @@
 @property (strong, nonatomic) NSArray *arrayPlatForm;
 @property (strong, nonatomic) NSMutableArray *arrayPlayName;
 @property (strong, nonatomic) UIActionSheet * editActionSheet;
+@property (strong, nonatomic) SetUpViewController * setUpViewController;
+@property (strong, nonatomic) UIPopoverController * pop;
+@property (strong, nonatomic) UIView *viewActivityIndicatorView;
+@property (strong, nonatomic) UIActivityIndicatorView *largeActivity;
 
 @end
 
@@ -79,14 +89,19 @@
 @synthesize arrayPlatForm;
 @synthesize arrayPlayName;
 @synthesize editActionSheet;
+@synthesize setUpViewController;
+@synthesize pop;
+@synthesize viewActivityIndicatorView;
+@synthesize largeActivity;
 
 #pragma mark - Init
 
 - (id)init {
     self = [super init];
     if (self) {
-        #ifdef BAKER_NEWSSTAND
+#ifdef BAKER_NEWSSTAND
         purchasesManager = [PurchasesManager sharedInstance];
+        
         [self addPurchaseObserver:@selector(handleProductsRetrieved:)
                              name:@"notification_products_retrieved"];
         [self addPurchaseObserver:@selector(handleProductsRequestFailed:)
@@ -103,27 +118,27 @@
                              name:@"notification_multiple_restores"];
         [self addPurchaseObserver:@selector(handleRestoredIssueNotRecognised:)
                              name:@"notification_restored_issue_not_recognised"];
-
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(receiveBookProtocolNotification:)
                                                      name:@"notification_book_protocol"
                                                    object:nil];
-
+        
         [[SKPaymentQueue defaultQueue] addTransactionObserver:purchasesManager];
-        #endif
-
+#endif
+        
         api = [BakerAPI sharedInstance];
         issuesManager = [[IssuesManager sharedInstance] retain];
         notRecognisedTransactions = [[NSMutableArray alloc] init];
-
+        
         self.shelfStatus = [[[ShelfStatus alloc] init] autorelease];
         self.issueViewControllers = [[[NSMutableArray alloc] init] autorelease];
         self.supportedOrientation = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UISupportedInterfaceOrientations"];
         self.bookToBeProcessed = nil;
-
-        #ifdef BAKER_NEWSSTAND
+        
+#ifdef BAKER_NEWSSTAND
         [self handleRefresh:nil];
-        #endif
+#endif
     }
     return self;
 }
@@ -133,7 +148,7 @@
     self = [self init];
     if (self) {
         self.issues = currentBooks;
-
+        
         NSMutableArray *controllers = [NSMutableArray array];
         for (BakerIssue *issue in self.issues) {
             IssueViewController *controller = [self createIssueViewControllerWithIssue:issue];
@@ -148,7 +163,7 @@
 
 - (void)dealloc
 {
-//    [gridView release];
+    //    [gridView release];
     [issueViewControllers release];
     [issues release];
     [subscribeButton release];
@@ -160,11 +175,11 @@
     [issuesManager release];
     [notRecognisedTransactions release];
     [bookToBeProcessed release];
-
-    #ifdef BAKER_NEWSSTAND
+    
+#ifdef BAKER_NEWSSTAND
     [purchasesManager release];
-    #endif
-
+#endif
+    
     [super dealloc];
 }
 
@@ -181,7 +196,6 @@
                                                                                         url:UMShareImageUrl];
     socialData.urlResource = urlresource;
     
-    
     //分享的弹出界面
     self.arrayPlatForm = [NSArray arrayWithObjects:UMShareToSina,UMShareToTencent,UMShareToQzone,UMShareToEmail,UMShareToSms, nil];
     self.arrayPlayName = [NSMutableArray arrayWithObjects:@"微信好友",@"微信朋友圈", nil];
@@ -191,48 +205,43 @@
         [self.arrayPlayName addObject:snsPlatform.displayName];
     }
     self.editActionSheet = [[UIActionSheet alloc] initWithTitle:@"分享" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
-       for (NSString *snsName in self.arrayPlayName)
+    for (NSString *snsName in self.arrayPlayName)
     {
         [self.editActionSheet addButtonWithTitle:snsName];
-     }
+    }
     [self.editActionSheet addButtonWithTitle:@"取消"];
-     self.editActionSheet.cancelButtonIndex = self.editActionSheet.numberOfButtons - 1;
-     self.editActionSheet.delegate = self;
-
-    self.navigationItem.title = NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil);
-
-    self.background = [[[UIImageView alloc] init] autorelease];
-
-//    self.gridView = [[[AQGridView alloc] init] autorelease];
-//    self.gridView.dataSource = self;
-//    self.gridView.delegate = self;
-//    self.gridView.backgroundColor = [UIColor clearColor];
+    self.editActionSheet.cancelButtonIndex = self.editActionSheet.numberOfButtons - 1;
+    self.editActionSheet.delegate = self;
     
+    self.navigationItem.title = NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil);
+    self.background = [[[UIImageView alloc] init] autorelease];
     _wrap = YES;
     
+    //滚动Carousel
     self.carousel = [[iCarousel alloc]init];
-    
-//    self.carousel.frame = CGRectMake(0, 0, 320, 480);
-//    [self.view addSubview:carousel];
-    
     self.carousel.dataSource = self;
-    
-   self.carousel.delegate = self;
-    
+    self.carousel.delegate = self;
     carousel.type = iCarouselTypeCoverFlow2;
     [self.view addSubview:self.background];
     [self.view addSubview:self.carousel];
-
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
-//    [self.gridView reloadData];
     [self.carousel reloadData];
-
-    #ifdef BAKER_NEWSSTAND
-//    self.refreshButton = [[[UIBarButtonItem alloc]
-//                                       initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-//                                       target:self
-//                                       action:@selector(handleRefresh:)]
-//                                      autorelease];
+    
+    
+    //progress
+    self.viewActivityIndicatorView = [[UIView alloc]initWithFrame:CustomActivity_IndicatorViewFrame];
+    [self.viewActivityIndicatorView setBackgroundColor:[UIColor blackColor]];
+    [self.viewActivityIndicatorView setAlpha:0.5];
+    self.viewActivityIndicatorView.layer.cornerRadius = 10;
+    [self.view addSubview:self.viewActivityIndicatorView];
+    self.viewActivityIndicatorView.hidden = YES;
+    
+    self.largeActivity = [[UIActivityIndicatorView alloc]initWithFrame:CustomActivity_ActivityIndicatorFrame];
+    self.largeActivity.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhiteLarge;
+    [self.viewActivityIndicatorView addSubview:self.largeActivity];
+    
+    
+#ifdef BAKER_NEWSSTAND
     
     self.refreshButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.refreshButton setImage:[UIImage imageNamed:@"shelf_bg_refresh.png"] forState:UIControlStateNormal];
@@ -246,17 +255,21 @@
     
     self.sysTemButton= [UIButton buttonWithType:UIButtonTypeCustom];
     [self.sysTemButton setImage:[UIImage imageNamed:@"shelf_bg_system.png"] forState:UIControlStateNormal];
-    [self.sysTemButton addTarget:self action:@selector(handleRefresh:) forControlEvents:UIControlEventTouchUpInside];
+    [self.sysTemButton addTarget:self action:@selector(handleSetUp:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.sysTemButton];
-     
-
+    
+    setUpViewController = [[SetUpViewController alloc]initWithStyle:UITableViewStylePlain];
+    setUpViewController.setupDelegate = self;
+    self.pop = [[UIPopoverController alloc]initWithContentViewController:setUpViewController];
+    
+    
     self.subscribeButton = [[[UIBarButtonItem alloc]
                              initWithTitle: NSLocalizedString(@"SUBSCRIBE_BUTTON_TEXT", nil)
                              style:UIBarButtonItemStylePlain
                              target:self
                              action:@selector(handleSubscribeButtonPressed:)]
                             autorelease];
-
+    
     self.blockingProgressView = [[UIAlertView alloc]
                                  initWithTitle:@"Processing..."
                                  message:@"\n"
@@ -268,13 +281,13 @@
     [self.blockingProgressView addSubview:spinner];
     [spinner startAnimating];
     [spinner release];
-
+    
     NSMutableSet *subscriptions = [NSMutableSet setWithArray:AUTO_RENEWABLE_SUBSCRIPTION_PRODUCT_IDS];
     if ([FREE_SUBSCRIPTION_PRODUCT_ID length] > 0 && ![purchasesManager isPurchased:FREE_SUBSCRIPTION_PRODUCT_ID]) {
         [subscriptions addObject:FREE_SUBSCRIPTION_PRODUCT_ID];
     }
     [purchasesManager retrievePricesFor:subscriptions andEnableFailureNotifications:NO];
-    #endif
+#endif
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -282,19 +295,19 @@
     [self.navigationController.navigationBar setTranslucent:NO];
     [self.navigationController setNavigationBarHidden:YES];
     [self willRotateToInterfaceOrientation:self.interfaceOrientation duration:0];
-
+    
     for (IssueViewController *controller in self.issueViewControllers) {
         controller.issue.transientStatus = BakerIssueTransientStatusNone;
         [controller refresh];
     }
-
-    #ifdef BAKER_NEWSSTAND
-//    NSMutableArray *buttonItems = [NSMutableArray arrayWithObject:self.refreshButton];
-//    if ([purchasesManager hasSubscriptions] || [issuesManager hasProductIDs]) {
-//        [buttonItems addObject:self.subscribeButton];
-//    }
-//    self.navigationItem.leftBarButtonItems = buttonItems;
-    #endif
+    
+#ifdef BAKER_NEWSSTAND
+    //    NSMutableArray *buttonItems = [NSMutableArray arrayWithObject:self.refreshButton];
+    //    if ([purchasesManager hasSubscriptions] || [issuesManager hasProductIDs]) {
+    //        [buttonItems addObject:self.subscribeButton];
+    //    }
+    //    self.navigationItem.leftBarButtonItems = buttonItems;
+#endif
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -318,9 +331,9 @@
 {
     int width  = 0;
     int height = 0;
-
+    
     CGRect rect = [UIApplication sharedApplication].statusBarFrame;
-        
+    
     NSString *image = @"";
     CGSize size = [UIScreen mainScreen].bounds.size;
     
@@ -336,24 +349,24 @@
         }
         image  = @"shelf-bg-landscape";
     }
-
+    
     if (size.height == 568) {
         image = [NSString stringWithFormat:@"%@-568h.png", image];
     } else {
         image = [NSString stringWithFormat:@"%@.png", image];
     }
-
-//    int bannerHeight = [ShelfViewController getBannerHeight];
+    
+    //    int bannerHeight = [ShelfViewController getBannerHeight];
     self.carousel.frame = CGRectMake(0, 117, width, 600);
     self.refreshButton.frame = CGRectMake(44, 10, 60, 60);
     self.shareButton.frame = CGRectMake(size.height - 128, 10, 60, 60);
     self.sysTemButton.frame = CGRectMake(size.height-74, 10, 60, 60);
     
-
+    
     self.background.frame = CGRectMake(0, 0, width, height);
     self.background.image = [UIImage imageNamed:image];
-
-//    self.gridView.frame = CGRectMake(0, bannerHeight, width, height - bannerHeight);
+    
+    //    self.gridView.frame = CGRectMake(0, bannerHeight, width, height - bannerHeight);
 }
 - (IssueViewController *)createIssueViewControllerWithIssue:(BakerIssue *)issue
 {
@@ -401,37 +414,39 @@
 #ifdef BAKER_NEWSSTAND
 - (void)handleRefresh:(NSNotification *)notification {
     [self setrefreshButtonEnabled:NO];
-
+    
+    self.viewActivityIndicatorView.hidden = NO;
+    [self.largeActivity startAnimating];
+    
     if([issuesManager refresh]) {
         self.issues = issuesManager.issues;
-
+        
         [purchasesManager retrievePurchasesFor:[issuesManager productIDs]];
-
+        
         [shelfStatus load];
         for (BakerIssue *issue in self.issues) {
             issue.price = [shelfStatus priceFor:issue.productID];
         }
-
+        
         [self.issues enumerateObjectsUsingBlock:^(id object, NSUInteger idx, BOOL *stop) {
             // NOTE: this block changes the issueViewController array while looping
-
+            
             IssueViewController *existingIvc = nil;
             if (idx < [self.issueViewControllers count]) {
                 existingIvc = [self.issueViewControllers objectAtIndex:idx];
             }
-
+            
             BakerIssue *issue = (BakerIssue*)object;
             if (!existingIvc || ![[existingIvc issue].ID isEqualToString:issue.ID]) {
                 IssueViewController *ivc = [self createIssueViewControllerWithIssue:issue];
                 [self.issueViewControllers insertObject:ivc atIndex:idx];
-//                [self.gridView insertItemsAtIndices:[NSIndexSet indexSetWithIndex:idx] withAnimation:AQGridViewItemAnimationNone];
                 [self.carousel reloadData];
             } else {
                 existingIvc.issue = issue;
                 [existingIvc refreshContentWithCache:NO];
             }
         }];
-
+        
         [purchasesManager retrievePricesFor:issuesManager.productIDs andEnableFailureNotifications:NO];
     }
     else{
@@ -440,9 +455,23 @@
                       buttonTitle:NSLocalizedString(@"INTERNET_CONNECTION_UNAVAILABLE_CLOSE", nil)];
     }
     [self setrefreshButtonEnabled:YES];
+    
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        self.viewActivityIndicatorView.hidden = YES;
+        [self.largeActivity stopAnimating];
+    });
+    
 }
 
 #pragma mark iCarouselDelegate
+
+-(void)handleSetUp:(id)sender
+{
+    [self.pop presentPopoverFromRect:CGRectMake(self.sysTemButton.frame.origin.x, self.sysTemButton.frame.origin.y+10, 200, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionRight animated:YES];
+    
+}
 
 -(void)handleShare:(id)sender
 {
@@ -520,20 +549,20 @@
     } else {
         title = NSLocalizedString(@"SUBSCRIPTIONS_SHEET_GENERIC", nil);
     }
-
+    
     UIActionSheet *sheet = [[UIActionSheet alloc]initWithTitle:title
                                                       delegate:self
                                              cancelButtonTitle:nil
                                         destructiveButtonTitle:nil
                                              otherButtonTitles: nil];
     NSMutableArray *actions = [NSMutableArray array];
-
+    
     if (!purchasesManager.subscribed) {
         if ([FREE_SUBSCRIPTION_PRODUCT_ID length] > 0 && ![purchasesManager isPurchased:FREE_SUBSCRIPTION_PRODUCT_ID]) {
             [sheet addButtonWithTitle:NSLocalizedString(@"SUBSCRIPTIONS_SHEET_FREE", nil)];
             [actions addObject:FREE_SUBSCRIPTION_PRODUCT_ID];
         }
-
+        
         for (NSString *productId in AUTO_RENEWABLE_SUBSCRIPTION_PRODUCT_IDS) {
             NSString *title = NSLocalizedString(productId, nil);
             NSString *price = [purchasesManager priceFor:productId];
@@ -543,17 +572,17 @@
             }
         }
     }
-
+    
     if ([issuesManager hasProductIDs]) {
         [sheet addButtonWithTitle:NSLocalizedString(@"SUBSCRIPTIONS_SHEET_RESTORE", nil)];
         [actions addObject:@"restore"];
     }
-
+    
     [sheet addButtonWithTitle:NSLocalizedString(@"SUBSCRIPTIONS_SHEET_CLOSE", nil)];
     [actions addObject:@"cancel"];
-
+    
     self.subscriptionsActionSheetActions = actions;
-
+    
     sheet.cancelButtonIndex = sheet.numberOfButtons - 1;
     return sheet;
 }
@@ -581,92 +610,92 @@
     }
     else if (actionSheet == self.editActionSheet)
     {
-    
-    if (buttonIndex == actionSheet.cancelButtonIndex) {
-        return;
-    }
-   UMSocialControllerService *  socialControllerService = [UMSocialControllerService defaultControllerService];
-    
-    if(buttonIndex == 0|| buttonIndex == 1)
-    {
-        if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi])
+        
+        if (buttonIndex == actionSheet.cancelButtonIndex) {
+            return;
+        }
+        UMSocialControllerService *  socialControllerService = [UMSocialControllerService defaultControllerService];
+        
+        if(buttonIndex == 0|| buttonIndex == 1)
         {
-            if (socialControllerService.currentNavigationController != nil) {
-                [socialControllerService performSelector:@selector(close)];
-            }
-            
-            SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
-            
-            WXMediaMessage *message = [WXMediaMessage message];
-            
-            //分享的是图片
-            if (socialControllerService.socialData.urlResource)
+            if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi])
             {
-                UMSocialUrlResource *urlresource = socialControllerService.socialData.urlResource;
+                if (socialControllerService.currentNavigationController != nil) {
+                    [socialControllerService performSelector:@selector(close)];
+                }
                 
-                NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlresource.url]];
+                SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
                 
-                message.thumbData = dataImage;
+                WXMediaMessage *message = [WXMediaMessage message];
+                
+                //分享的是图片
+                if (socialControllerService.socialData.urlResource)
+                {
+                    UMSocialUrlResource *urlresource = socialControllerService.socialData.urlResource;
+                    
+                    NSData *dataImage = [NSData dataWithContentsOfURL:[NSURL URLWithString:urlresource.url]];
+                    
+                    message.thumbData = dataImage;
+                }
+                
+                //分享的文字
+                if (socialControllerService.socialData.shareText)
+                {
+                    message.description = socialControllerService.socialData.shareText;
+                }
+                
+                //分享url
+                if (UMShareHylink)
+                {
+                    WXWebpageObject *ext = [WXWebpageObject object];
+                    
+                    ext.webpageUrl = UMShareHylink;
+                    
+                    message.mediaObject = ext;
+                }
+                
+                NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
+                
+                NSString *strTitle = [infoDict objectForKey:@"CFBundleDisplayName"];
+                
+                message.title = [NSString stringWithFormat:@"来自于[%@]应用",strTitle];
+                
+                req.message = message;
+                
+                req.bText = NO;
+                
+                
+                if (buttonIndex == 0) {
+                    
+                    req.scene = WXSceneSession;
+                    
+                    //                _socialControllerService = [UMSocialControllerService defaultControllerService];
+                    
+                    [ socialControllerService.socialDataService postSNSWithTypes:[NSArray arrayWithObject:UMShareToWechatSession] content:req.text image:nil location:nil urlResource:nil completion:nil];
+                }
+                if (buttonIndex == 1) {
+                    //                _socialControllerService = [UMSocialControllerService defaultControllerService];
+                    req.scene = WXSceneTimeline;
+                    [socialControllerService.socialDataService postSNSWithTypes:[NSArray arrayWithObject:UMShareToWechatTimeline] content:req.text image:nil location:nil urlResource:nil completion:nil];
+                }
+                [WXApi sendReq:req];
+                
             }
-            
-            //分享的文字
-            if (socialControllerService.socialData.shareText)
-            {
-                message.description = socialControllerService.socialData.shareText;
+            else{
+                UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"好" otherButtonTitles: nil];
+                [alertView show];
             }
+        }
+        else
+        {
+            NSString *snsName = [self.arrayPlatForm objectAtIndex:buttonIndex-2];
             
-            //分享url
-            if (UMShareHylink)
-            {
-                WXWebpageObject *ext = [WXWebpageObject object];
-                
-                ext.webpageUrl = UMShareHylink;
-                
-                message.mediaObject = ext;
-            }
+            UMSocialSnsPlatform *snsPlatForm = [UMSocialSnsPlatformManager getSocialPlatformWithName:snsName];
             
-            NSDictionary *infoDict = [[NSBundle mainBundle] infoDictionary];
-            
-            NSString *strTitle = [infoDict objectForKey:@"CFBundleDisplayName"];
-            
-            message.title = [NSString stringWithFormat:@"来自于[%@]应用",strTitle];
-            
-            req.message = message;
-            
-            req.bText = NO;
-            
-            
-            if (buttonIndex == 0) {
-                
-                req.scene = WXSceneSession;
-                
-                //                _socialControllerService = [UMSocialControllerService defaultControllerService];
-                
-                [ socialControllerService.socialDataService postSNSWithTypes:[NSArray arrayWithObject:UMShareToWechatSession] content:req.text image:nil location:nil urlResource:nil completion:nil];
-            }
-            if (buttonIndex == 1) {
-                //                _socialControllerService = [UMSocialControllerService defaultControllerService];
-                req.scene = WXSceneTimeline;
-                [socialControllerService.socialDataService postSNSWithTypes:[NSArray arrayWithObject:UMShareToWechatTimeline] content:req.text image:nil location:nil urlResource:nil completion:nil];
-            }
-            [WXApi sendReq:req];
+            snsPlatForm.snsClickHandler(self,socialControllerService,YES);
             
         }
-        else{
-            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"您的设备没有安装微信" delegate:nil cancelButtonTitle:@"好" otherButtonTitles: nil];
-            [alertView show];
-        }
     }
-    else
-    {
-        NSString *snsName = [self.arrayPlatForm objectAtIndex:buttonIndex-2];
-        
-        UMSocialSnsPlatform *snsPlatForm = [UMSocialSnsPlatformManager getSocialPlatformWithName:snsName];
-        
-        snsPlatForm.snsClickHandler(self,socialControllerService,YES);
-        
-    }
-}
 }
 
 - (void)handleRestoreFailed:(NSNotification *)notification {
@@ -674,28 +703,28 @@
     [Utils showAlertWithTitle:NSLocalizedString(@"RESTORE_FAILED_TITLE", nil)
                       message:[error localizedDescription]
                   buttonTitle:NSLocalizedString(@"RESTORE_FAILED_CLOSE", nil)];
-
+    
     [self.blockingProgressView dismissWithClickedButtonIndex:0 animated:YES];
-
+    
 }
 
 - (void)handleMultipleRestores:(NSNotification *)notification {
-    #ifdef BAKER_NEWSSTAND
+#ifdef BAKER_NEWSSTAND
     if ([notRecognisedTransactions count] > 0) {
         NSSet *productIDs = [NSSet setWithArray:[[notRecognisedTransactions valueForKey:@"payment"] valueForKey:@"productIdentifier"]];
         NSString *productsList = [[productIDs allObjects] componentsJoinedByString:@", "];
-
+        
         [Utils showAlertWithTitle:NSLocalizedString(@"RESTORED_ISSUE_NOT_RECOGNISED_TITLE", nil)
                           message:[NSString stringWithFormat:NSLocalizedString(@"RESTORED_ISSUE_NOT_RECOGNISED_MESSAGE", nil), productsList]
                       buttonTitle:NSLocalizedString(@"RESTORED_ISSUE_NOT_RECOGNISED_CLOSE", nil)];
-
+        
         for (SKPaymentTransaction *transaction in notRecognisedTransactions) {
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
         }
         [notRecognisedTransactions removeAllObjects];
     }
-    #endif
-
+#endif
+    
     [self handleRefresh:nil];
     [self.blockingProgressView dismissWithClickedButtonIndex:0 animated:YES];
 }
@@ -713,16 +742,16 @@
 
 - (void)handleSubscriptionPurchased:(NSNotification *)notification {
     SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
-
+    
     [purchasesManager markAsPurchased:transaction.payment.productIdentifier];
     [self setSubscribeButtonEnabled:YES];
-
+    
     if ([purchasesManager finishTransaction:transaction]) {
         if (!purchasesManager.subscribed) {
             [Utils showAlertWithTitle:NSLocalizedString(@"SUBSCRIPTION_SUCCESSFUL_TITLE", nil)
                               message:NSLocalizedString(@"SUBSCRIPTION_SUCCESSFUL_MESSAGE", nil)
                           buttonTitle:NSLocalizedString(@"SUBSCRIPTION_SUCCESSFUL_CLOSE", nil)];
-
+            
             [self handleRefresh:nil];
         }
     } else {
@@ -734,22 +763,22 @@
 
 - (void)handleSubscriptionFailed:(NSNotification *)notification {
     SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
-
+    
     // Show an error, unless it was the user who cancelled the transaction
     if (transaction.error.code != SKErrorPaymentCancelled) {
         [Utils showAlertWithTitle:NSLocalizedString(@"SUBSCRIPTION_FAILED_TITLE", nil)
                           message:[transaction.error localizedDescription]
                       buttonTitle:NSLocalizedString(@"SUBSCRIPTION_FAILED_CLOSE", nil)];
     }
-
+    
     [self setSubscribeButtonEnabled:YES];
 }
 
 - (void)handleSubscriptionRestored:(NSNotification *)notification {
     SKPaymentTransaction *transaction = [notification.userInfo objectForKey:@"transaction"];
-
+    
     [purchasesManager markAsPurchased:transaction.payment.productIdentifier];
-
+    
     if (![purchasesManager finishTransaction:transaction]) {
         NSLog(@"Could not confirm purchase restore with remote server for %@", transaction.payment.productIdentifier);
     }
@@ -758,7 +787,7 @@
 - (void)handleProductsRetrieved:(NSNotification *)notification {
     NSSet *ids = [notification.userInfo objectForKey:@"ids"];
     BOOL issuesRetrieved = NO;
-
+    
     for (NSString *productId in ids) {
         if ([productId isEqualToString:FREE_SUBSCRIPTION_PRODUCT_ID]) {
             // ID is for a free subscription
@@ -771,7 +800,7 @@
             issuesRetrieved = YES;
         }
     }
-
+    
     if (issuesRetrieved) {
         NSString *price;
         for (IssueViewController *controller in self.issueViewControllers) {
@@ -787,7 +816,7 @@
 
 - (void)handleProductsRequestFailed:(NSNotification *)notification {
     NSError *error = [notification.userInfo objectForKey:@"error"];
-
+    
     [Utils showAlertWithTitle:NSLocalizedString(@"PRODUCTS_REQUEST_FAILED_TITLE", nil)
                       message:[error localizedDescription]
                   buttonTitle:NSLocalizedString(@"PRODUCTS_REQUEST_FAILED_CLOSE", nil)];
@@ -805,8 +834,8 @@
 {
     BakerBook *book = nil;
     NSString *status = [issue getStatus];
-
-    #ifdef BAKER_NEWSSTAND
+    
+#ifdef BAKER_NEWSSTAND
     if ([status isEqual:@"opening"]) {
         book = [[[BakerBook alloc] initWithBookPath:issue.path bundled:NO] autorelease];
         if (book) {
@@ -823,12 +852,12 @@
                           buttonTitle:NSLocalizedString(@"ISSUE_OPENING_FAILED_CLOSE", nil)];
         }
     }
-    #else
+#else
     if ([status isEqual:@"bundled"]) {
         book = [issue bakerBook];
         [self pushViewControllerWithBook:book];
     }
-    #endif
+#endif
 }
 - (void)handleReadIssue:(NSNotification *)notification
 {
@@ -848,7 +877,7 @@
             break;
         }
     }
-
+    
     self.bookToBeProcessed = nil;
 }
 - (void)pushViewControllerWithBook:(BakerBook *)book
@@ -876,12 +905,12 @@
 #pragma mark - Helper methods
 
 - (void)addPurchaseObserver:(SEL)notificationSelector name:(NSString *)notificationName {
-    #ifdef BAKER_NEWSSTAND
+#ifdef BAKER_NEWSSTAND
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:notificationSelector
                                                  name:notificationName
                                                object:purchasesManager];
-    #endif
+#endif
 }
 
 + (int)getBannerHeight
@@ -893,5 +922,14 @@
     }
 }
 
+
+-(void)setupViewController:(SetUpViewController*)setupViewController didSelectSetUpRow:(NSInteger)terger
+{
+    [self.pop dismissPopoverAnimated:NO];
+    WebViewController *webController = [[WebViewController alloc]init];
+    [webController setURL:[NSURL URLWithString:@"http://www.xayoudao.com/qujianglvyou/"]];
+//    [self.navigationController presentModalViewController:webController animated:YES];
+    [self.navigationController pushViewController:webController animated:YES];
+}
 
 @end

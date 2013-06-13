@@ -82,8 +82,10 @@
 		D0091083176453B4005ACF6C /* UMSnsAccountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091078176453B4005ACF6C /* UMSnsAccountViewController.xib */; };
 		D0091084176453B4005ACF6C /* UMSShareListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0091079176453B4005ACF6C /* UMSShareListController.xib */; };
 		D0091085176453B4005ACF6C /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D009107A176453B4005ACF6C /* UMSocialSDKResources.bundle */; };
+		D0215187176998D20079ACFD /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0215186176998D10079ACFD /* WebViewController.m */; };
 		D09B929E1761C11500A0D3B6 /* StatusView.m in Sources */ = {isa = PBXBuildFile; fileRef = D09B929D1761C11400A0D3B6 /* StatusView.m */; };
 		D09DAE6E1757443D001E3E39 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = D09DAE6D1757443D001E3E39 /* iCarousel.m */; };
+		D0CBDAB317696C7F0071A6EA /* SetUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0CBDAB2176966640071A6EA /* SetUpViewController.m */; };
 		D0D8705D1761EF4300B689AC /* navigation-bar-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870471761EF4300B689AC /* navigation-bar-bg.png */; };
 		D0D8705E1761EF4300B689AC /* navigation-bar-bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870481761EF4300B689AC /* navigation-bar-bg@2x.png */; };
 		D0D8705F1761EF4300B689AC /* shelf-bg-landscape-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = D0D870491761EF4300B689AC /* shelf-bg-landscape-568h.png */; };
@@ -248,10 +250,14 @@
 		D0091078176453B4005ACF6C /* UMSnsAccountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSnsAccountViewController.xib; sourceTree = "<group>"; };
 		D0091079176453B4005ACF6C /* UMSShareListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UMSShareListController.xib; sourceTree = "<group>"; };
 		D009107A176453B4005ACF6C /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
+		D0215185176998D10079ACFD /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		D0215186176998D10079ACFD /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		D09B929C1761C11400A0D3B6 /* StatusView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StatusView.h; path = BakerShelf/StatusView.h; sourceTree = SOURCE_ROOT; };
 		D09B929D1761C11400A0D3B6 /* StatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusView.m; path = BakerShelf/StatusView.m; sourceTree = SOURCE_ROOT; };
 		D09DAE6C1757443D001E3E39 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D09DAE6D1757443D001E3E39 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		D0CBDAB1176966640071A6EA /* SetUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetUpViewController.h; sourceTree = "<group>"; };
+		D0CBDAB2176966640071A6EA /* SetUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetUpViewController.m; sourceTree = "<group>"; };
 		D0D870471761EF4300B689AC /* navigation-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg.png"; sourceTree = "<group>"; };
 		D0D870481761EF4300B689AC /* navigation-bar-bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg@2x.png"; sourceTree = "<group>"; };
 		D0D870491761EF4300B689AC /* shelf-bg-landscape-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "shelf-bg-landscape-568h.png"; sourceTree = "<group>"; };
@@ -456,6 +462,10 @@
 				ABF23B1C1708418E003AA3B0 /* BakerAPI.m */,
 				D09B929C1761C11400A0D3B6 /* StatusView.h */,
 				D09B929D1761C11400A0D3B6 /* StatusView.m */,
+				D0CBDAB1176966640071A6EA /* SetUpViewController.h */,
+				D0CBDAB2176966640071A6EA /* SetUpViewController.m */,
+				D0215185176998D10079ACFD /* WebViewController.h */,
+				D0215186176998D10079ACFD /* WebViewController.m */,
 			);
 			path = BakerShelf;
 			sourceTree = "<group>";
@@ -733,6 +743,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0CBDAB317696C7F0071A6EA /* SetUpViewController.m in Sources */,
 				ABAFB59815AB9A2E002FA498 /* main.m in Sources */,
 				ABAFB59C15AB9A2E002FA498 /* AppDelegate.m in Sources */,
 				AB40045315B4B83000D87E2A /* BakerViewController.m in Sources */,
@@ -778,6 +789,7 @@
 				ABF23B1D1708418E003AA3B0 /* BakerAPI.m in Sources */,
 				D09DAE6E1757443D001E3E39 /* iCarousel.m in Sources */,
 				D09B929E1761C11500A0D3B6 /* StatusView.m in Sources */,
+				D0215187176998D20079ACFD /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -101,21 +101,16 @@
 {
     [super viewDidLoad];
 
-    CGSize cellSize = [IssueViewController getIssueCellSize];
+//    CGSize cellSize = [IssueViewController getIssueCellSize];
 
     self.view.frame = CGRectMake(0, 0, 403, 600);
-    
-    
-
     self.view.backgroundColor = [UIColor clearColor];
     self.view.tag = 42;
 
-    UI ui = [IssueViewController getIssueContentMeasures];
+//    UI ui = [IssueViewController getIssueContentMeasures];
 
     self.issueCover = [UIButton buttonWithType:UIButtonTypeCustom];
     issueCover.frame = CGRectMake(0, 0,403, 514);
-
-
     issueCover.backgroundColor = [UIColor colorWithHexString:ISSUES_COVER_BACKGROUND_COLOR];
     issueCover.adjustsImageWhenHighlighted = NO;
     issueCover.adjustsImageWhenDisabled = NO;
@@ -144,7 +139,6 @@
     tapReadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.view addSubview:tapReadButton];
  
-
     // SETUP PRICE LABEL
     self.priceLabel = [[[UILabel alloc] init] autorelease];
     priceLabel.textColor = [UIColor whiteColor];
@@ -161,14 +155,22 @@
     longPress.numberOfTouchesRequired = 1;
     [self.issueCover addGestureRecognizer:longPress];
     
+    UITapGestureRecognizer *tapIssueCover = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(actionButtonPressed:)];
+    tapIssueCover.numberOfTapsRequired = 1;
+    [self.issueCover addGestureRecognizer:tapIssueCover];
+   
+    UITapGestureRecognizer *tapRead = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionButtonPressed:)];
+    tapRead.numberOfTapsRequired = 1;
+    [tapReadButton addGestureRecognizer:tapRead];
+    
     self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(actionButtonPressed:)];
     tap.numberOfTouchesRequired = 1;
     [self.view addGestureRecognizer:tap];
+
     
 #endif
      
     self.statusview = [[StatusView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-36, 105, 36)];
-    [self.statusview setBackgroundColor:[UIColor redColor]];
     [self.view addSubview:self.statusview];
 
     #ifdef BAKER_NEWSSTAND
@@ -260,7 +262,7 @@
         self.loadingLabel.hidden = YES;
         self.priceLabel.hidden = NO;
         
-        self.statusview.hidden = NO;
+        self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
         [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
     }
@@ -341,7 +343,7 @@
         
         self.statusview.hidden = YES;
         self.tapReadButton.hidden = NO;
-        [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-Subscription.png"] forState:UIControlStateNormal];
+       [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-read.png"] forState:UIControlStateNormal];
     }
     else if ([status isEqualToString:@"purchasable"])
     {

@@ -464,6 +464,8 @@
     NSString *status = [self.issue getStatus];
     if ([status isEqualToString:@"remote"] || [status isEqualToString:@"purchased"]) {
     #ifdef BAKER_NEWSSTAND
+        self.statusview.hidden = NO;
+        self.tapReadButton.hidden = YES;
         [self download];
     #endif
     } else if ([status isEqualToString:@"downloaded"] || [status isEqualToString:@"bundled"]) {

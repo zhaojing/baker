@@ -256,6 +256,7 @@
 		D09B929D1761C11400A0D3B6 /* StatusView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StatusView.m; path = BakerShelf/StatusView.m; sourceTree = SOURCE_ROOT; };
 		D09DAE6C1757443D001E3E39 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		D09DAE6D1757443D001E3E39 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		D0B69C731769D6FA009A0CB5 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D0CBDAB1176966640071A6EA /* SetUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetUpViewController.h; sourceTree = "<group>"; };
 		D0CBDAB2176966640071A6EA /* SetUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetUpViewController.m; sourceTree = "<group>"; };
 		D0D870471761EF4300B689AC /* navigation-bar-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navigation-bar-bg.png"; sourceTree = "<group>"; };
@@ -676,6 +677,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = ABAFB57C15AB9A2E002FA498;
 			productRefGroup = ABAFB58815AB9A2E002FA498 /* Products */;
@@ -800,6 +802,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				20CC551E16AD346900DEFB5C /* en */,
+				D0B69C731769D6FA009A0CB5 /* zh-Hans */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

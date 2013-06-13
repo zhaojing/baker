@@ -177,6 +177,8 @@
         [self.navigationController.navigationBar setTranslucent:YES];
         [self.navigationController setNavigationBarHidden:NO];
         [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navigation-bar2-bg.png"] forBarMetrics:UIBarMetricsDefault];
+        
+
 
         // Prevent duplicate observers
         [[NSNotificationCenter defaultCenter] removeObserver:self name:@"notification_touch_intercepted" object:nil];

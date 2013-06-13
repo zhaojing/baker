@@ -115,7 +115,7 @@
     issueCover.adjustsImageWhenHighlighted = NO;
     issueCover.adjustsImageWhenDisabled = NO;
 
-    issueCover.layer.shadowOpacity = 0.5;
+    issueCover.layer.shadowOpacity = 0.3;
     issueCover.layer.shadowOffset = CGSizeMake(5, 15);
     issueCover.layer.shouldRasterize = YES;
     issueCover.layer.rasterizationScale = [UIScreen mainScreen].scale;
@@ -171,7 +171,7 @@
     
 #endif
      
-    self.statusview = [[StatusView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-36, 105, 36)];
+    self.statusview = [[StatusView alloc]initWithFrame:CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-46, 105, 36)];
     [self.view addSubview:self.statusview];
 
     #ifdef BAKER_NEWSSTAND
@@ -209,10 +209,10 @@
     heightOffset = heightOffset + titleLabel.frame.size.height + 5;
     
     // TapButton Frame
-    tapReadButton.frame = CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-36, 105, 36);
+    tapReadButton.frame = CGRectMake(self.view.frame.size.width -105, self.view.frame.size.height-46, 105, 36);
 
     // SETUP PRICE LABEL);
-    self.priceLabel.frame = CGRectMake(0, self.view.frame.size.height-30 , 170, 30);
+    self.priceLabel.frame = CGRectMake(0, self.view.frame.size.height-40 , 170, 30);
 
     heightOffset = heightOffset + priceLabel.frame.size.height + 10;
 

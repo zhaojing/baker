@@ -292,9 +292,8 @@
 //        self.progressBar.hidden = YES;
         self.priceLabel.hidden = NO;
      
-        self.statusview.hidden = YES;
-        self.tapReadButton.hidden = NO;
-            [self.tapReadButton setBackgroundImage:[UIImage imageNamed:@"shelf-button-subscription.png"] forState:UIControlStateNormal];
+        self.statusview.hidden = NO;
+        self.tapReadButton.hidden = YES;
     }
     else if ([status isEqualToString:@"downloading"])
     {
@@ -463,9 +462,6 @@
 {
     NSString *status = [self.issue getStatus];
     if ([status isEqualToString:@"remote"] || [status isEqualToString:@"purchased"]) {
-        
-        self.statusview.hidden = NO;
-        self.tapReadButton.hidden = YES;
     #ifdef BAKER_NEWSSTAND
 
       [self download];

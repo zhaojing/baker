@@ -622,9 +622,14 @@
 
 - (void) actionLongPress:(UILongPressGestureRecognizer *)sender
 {
-    if (sender.state == UIGestureRecognizerStateBegan)
+     NSString *status = [self.issue getStatus];
+    
+    if ([status isEqualToString:@"downloaded"] || [status isEqualToString:@"bundled"])
     {
-        [self archiveButtonPressed:nil];
+        if (sender.state == UIGestureRecognizerStateBegan )
+        {
+            [self archiveButtonPressed:nil];
+        }
     }
 }
 

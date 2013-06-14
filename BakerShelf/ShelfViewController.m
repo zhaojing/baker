@@ -70,6 +70,7 @@
 @property (strong, nonatomic) UIPopoverController * pop;
 @property (strong, nonatomic) UIView *viewActivityIndicatorView;
 @property (strong, nonatomic) UIActivityIndicatorView *largeActivity;
+@property (strong, nonatomic) UIControl *overlayer;
 
 @end
 
@@ -93,6 +94,7 @@
 @synthesize pop;
 @synthesize viewActivityIndicatorView;
 @synthesize largeActivity;
+@synthesize overlayer;
 
 #pragma mark - Init
 
@@ -211,7 +213,6 @@
     }
     [self.editActionSheet addButtonWithTitle:@"取消"];
     self.editActionSheet.cancelButtonIndex = self.editActionSheet.numberOfButtons - 1;
-    self.editActionSheet.delegate = self;
     
     self.navigationItem.title = NSLocalizedString(@"SHELF_NAVIGATION_TITLE", nil);
     self.background = [[[UIImageView alloc] init] autorelease];
@@ -475,7 +476,21 @@
 
 -(void)handleShare:(id)sender
 {
-    [self.editActionSheet showInView:self.view];
+    UIWindow *keyWindow = [[UIApplication sharedApplication]keyWindow];
+    
+    self.overlayer = [[UIControl alloc]initWithFrame:[[UIScreen mainScreen]bounds]];
+    self.overlayer.backgroundColor = [UIColor colorWithRed:.16 green:.17 blue:.21 alpha:0.6];
+    [self.overlayer addTarget:self
+                       action:@selector(dismiss)
+             forControlEvents:UIControlEventTouchUpInside];
+    [keyWindow addSubview:self.overlayer];
+    [self.editActionSheet showInView:self.overlayer];
+}
+
+-(void)dismiss
+{
+    [self.overlayer removeFromSuperview];
+
 }
 
 - (NSUInteger)numberOfItemsInCarousel:(iCarousel *)carousel
@@ -610,7 +625,7 @@
     }
     else if (actionSheet == self.editActionSheet)
     {
-        
+        [self dismiss];
         if (buttonIndex == actionSheet.cancelButtonIndex) {
             return;
         }

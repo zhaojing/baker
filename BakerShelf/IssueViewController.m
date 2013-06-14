@@ -463,10 +463,12 @@
 {
     NSString *status = [self.issue getStatus];
     if ([status isEqualToString:@"remote"] || [status isEqualToString:@"purchased"]) {
-    #ifdef BAKER_NEWSSTAND
+        
         self.statusview.hidden = NO;
         self.tapReadButton.hidden = YES;
-        [self download];
+    #ifdef BAKER_NEWSSTAND
+
+      [self download];
     #endif
     } else if ([status isEqualToString:@"downloaded"] || [status isEqualToString:@"bundled"]) {
         [self read];
@@ -634,7 +636,7 @@
 }
 
 - (void)archiveButtonPressed:(UIButton *)sender
-{
+{ 
     UIAlertView *updateAlert = [[UIAlertView alloc]
                                 initWithTitle: NSLocalizedString(@"ARCHIVE_ALERT_TITLE", nil)
                                 message: NSLocalizedString(@"ARCHIVE_ALERT_MESSAGE", nil)

@@ -700,8 +700,8 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         case iCarouselTypeCoverFlow:
         case iCarouselTypeCoverFlow2:
         {
-            CGFloat tilt = [self valueForOption:iCarouselOptionTilt withDefault:0.0f];
-            CGFloat spacing = [self valueForOption:iCarouselOptionSpacing withDefault:1.1f];
+            CGFloat tilt = [self valueForOption:iCarouselOptionTilt withDefault:0.2f];
+            CGFloat spacing = [self valueForOption:iCarouselOptionSpacing withDefault:0.6f];
             CGFloat clampedOffset = fmaxf(-1.0f, fminf(1.0f, offset));
             
             if (_type == iCarouselTypeCoverFlow2)

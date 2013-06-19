@@ -584,8 +584,10 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     return value;
 }
 
-- (CATransform3D)transformForItemView:(UIView *)view withOffset:(CGFloat)offset
-{   
+- (CATransform3D)transformForItemView:(UIView *)view withOffset:(CGFloat)offset atIndex:(NSInteger)index
+{
+   
+    [_delegate carouselScrollToFront:self andFrontView:view withOffset:offset atIndex:index];
     //set up base transform
     CATransform3D transform = CATransform3DIdentity;
     transform.m34 = _perspective;
@@ -698,8 +700,8 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         case iCarouselTypeCoverFlow:
         case iCarouselTypeCoverFlow2:
         {
-            CGFloat tilt = [self valueForOption:iCarouselOptionTilt withDefault:0.9f];
-            CGFloat spacing = [self valueForOption:iCarouselOptionSpacing withDefault:0.25f];
+            CGFloat tilt = [self valueForOption:iCarouselOptionTilt withDefault:0.0f];
+            CGFloat spacing = [self valueForOption:iCarouselOptionSpacing withDefault:1.1f];
             CGFloat clampedOffset = fmaxf(-1.0f, fminf(1.0f, offset));
             
             if (_type == iCarouselTypeCoverFlow2)
@@ -746,6 +748,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
             }
             else
             {
+            
                 transform = CATransform3DTranslate(transform, x, 0.0f, z);
                 return CATransform3DRotate(transform, -clampedOffset * M_PI_2 * tilt, 0.0f, 1.0f, 0.0f);
             }
@@ -936,6 +939,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
         if (offset > 0)
         {
             _toggle = (offset <= 0.5f)? -clampedOffset: (1.0f - clampedOffset);
+        
         }
         else
         {
@@ -944,7 +948,7 @@ NSComparisonResult compareViewDepth(UIView *view1, UIView *view2, iCarousel *sel
     }
     
     //calculate transform
-    CATransform3D transform = [self transformForItemView:view withOffset:offset];
+    CATransform3D transform = [self transformForItemView:view withOffset:offset atIndex:index];
     
     //transform view
     view.superview.layer.transform = transform;

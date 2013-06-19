@@ -242,6 +242,9 @@ iCarouselOption;
 - (CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform;
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value;
 
+//icarousel 滚动到0的位置
+- (void)carouselScrollToFront:(iCarousel *)carousel andFrontView:(UIView*)view withOffset:(CGFloat)offset atIndex:(NSInteger)index;
+
 @end
 
 

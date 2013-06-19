@@ -220,6 +220,7 @@
     
     //滚动Carousel
     self.carousel = [[iCarousel alloc]init];
+    self.carousel.clipsToBounds = YES;
     self.carousel.dataSource = self;
     self.carousel.delegate = self;
     carousel.type = iCarouselTypeCoverFlow2;
@@ -358,7 +359,8 @@
     }
     
     //    int bannerHeight = [ShelfViewController getBannerHeight];
-    self.carousel.frame = CGRectMake(0, 117, width, 600);
+    self.carousel.frame = CGRectMake(45, 117, width-90, 630);
+    
     self.refreshButton.frame = CGRectMake(24, 0, 60, 60);
     self.shareButton.frame = CGRectMake(size.height - 128, 0, 60, 60);
     self.sysTemButton.frame = CGRectMake(size.height-64, 0, 60, 60);
@@ -540,6 +542,29 @@
             return value;
         }
     }
+}
+
+
+- (void)carouselScrollToFront:(iCarousel *)carousel andFrontView:(UIView*)view withOffset:(CGFloat)offset atIndex:(NSInteger)index
+{
+    IssueViewController *issueViewController = [self.issueViewControllers objectAtIndex:index];
+
+    if (offset != 0)
+    {
+        [issueViewController.priceLabel setHidden:YES];
+        [issueViewController.titleLabel setHidden:YES];
+        [issueViewController.infoLabel setHidden:YES];
+        [issueViewController.tapReadButton setHidden:YES];
+    }
+    else
+    {
+        [issueViewController.priceLabel setHidden:NO];
+        [issueViewController.titleLabel setHidden:NO];
+        [issueViewController.infoLabel setHidden:NO];
+        [issueViewController.tapReadButton setHidden:NO];
+    
+    }
+    
 }
 
 #pragma mark - Store Kit
